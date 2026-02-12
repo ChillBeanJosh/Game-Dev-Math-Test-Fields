@@ -9,8 +9,8 @@ public class geometricCollision : MonoBehaviour
     [Space]
 
     [Header("Box Information: ")]
-    private LineRenderer boxRenderer;
     public float boxSize = 10f;
+    private LineRenderer boxRenderer;
     [Space]
 
     [Header("Collision Information: ")]
