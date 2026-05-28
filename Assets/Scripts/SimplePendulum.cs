@@ -25,12 +25,9 @@ public class SimplePendulum : MonoBehaviour
     [Range(0.1f, 5f)] public float TimeScale;
 
     [Header("Global Properties: ")]
-    public float defaultLength = 2f;
+    public float defaultLength;
     public float defaultGravity = 9.81f;
-    [Space]
-    public GameObject massPrefab;
-    public Material lineMaterial;
-
+   
     [Header("Chain Properties: ")]
     public bool formChain = false;
     [Space]
@@ -40,8 +37,11 @@ public class SimplePendulum : MonoBehaviour
     public float chainAngleSpacing;
 
     [Header("Pendulum Data List: ")]
-    [Space]
     public List<Pendulum> pendulums = new List<Pendulum>();
+
+    [Header("Prefabs & Materials")]
+    public GameObject massPrefab;
+    public Material lineMaterial;
 
     private void Start()
     {

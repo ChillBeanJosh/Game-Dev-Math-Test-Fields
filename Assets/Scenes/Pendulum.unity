@@ -119,114 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &591464811
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 591464812}
-  - component: {fileID: 591464815}
-  - component: {fileID: 591464814}
-  - component: {fileID: 591464813}
-  m_Layer: 0
-  m_Name: Pivot Support (Visual)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &591464812
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591464811}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 50}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 100}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 671645282}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &591464813
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591464811}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &591464814
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591464811}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: fc28c8cb2140f0345981bff3c627de89, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &591464815
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591464811}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &671645280
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 671645282}
   - component: {fileID: 671645281}
+  - component: {fileID: 671645283}
   m_Layer: 0
   m_Name: Pendulum System
   m_TagString: Untagged
@@ -251,7 +144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671645280}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f66253a07fa50fe408ce8957969f1ead, type: 3}
   m_Name: 
@@ -259,11 +152,9 @@ MonoBehaviour:
   TimeScale: 1
   defaultLength: 3
   defaultGravity: 9.81
-  massPrefab: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  lineMaterial: {fileID: 2100000, guid: 1883af8574bfc9048bd3e5aa97e4f318, type: 2}
   formChain: 1
   chainCount: 80
-  chainPositionSpacing: 1
+  chainPositionSpacing: 0.5
   initialChainAngle: 10
   chainAngleSpacing: 1
   pendulums:
@@ -275,6 +166,8 @@ MonoBehaviour:
     pivotPosition: {x: 0, y: 0, z: 0}
     massTransform: {fileID: 0}
     lineRenderer: {fileID: 0}
+  massPrefab: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  lineMaterial: {fileID: 2100000, guid: 1883af8574bfc9048bd3e5aa97e4f318, type: 2}
 --- !u!4 &671645282
 Transform:
   m_ObjectHideFlags: 0
@@ -287,10 +180,49 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 591464812}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &671645283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671645280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da5e9cc7965b76418331ec92276e590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeScale: 1
+  defaultLength: 3
+  defaultMass: 1
+  defaultGravity: 9.81
+  initialAngle1: 90
+  initialAngle2: 90
+  formChain: 1
+  chainCount: 80
+  chainPositionSpacing: 0.5
+  initialChainAngle: 60
+  chainAngleSpacing: 0.1
+  systems:
+  - l1: 0
+    m1: 0
+    theta1: 90
+    p1: 0
+    l2: 0
+    m2: 0
+    theta2: 45
+    p2: 0
+    gravity: 0
+    pivotPosition: {x: 0, y: 0, z: 0}
+    mass1Transform: {fileID: 0}
+    lineRenderer1: {fileID: 0}
+    mass2Transform: {fileID: 0}
+    lineRenderer2: {fileID: 0}
+  massPrefab: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  lineMaterial: {fileID: 2100000, guid: 1883af8574bfc9048bd3e5aa97e4f318, type: 2}
 --- !u!1 &1850973585
 GameObject:
   m_ObjectHideFlags: 0
