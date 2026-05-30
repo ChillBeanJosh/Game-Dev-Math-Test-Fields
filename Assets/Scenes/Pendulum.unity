@@ -173,7 +173,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   lineThickness: 2
-  maxTrailPoints: 1000
+  isTrailActive: 1
   showTrailHead: 1
   trailHeadSize: 20
   trailHeadColor: {r: 1, g: 1, b: 1, a: 1}
@@ -497,6 +497,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphContainer: {fileID: 1182429862}
   graphScale: 30
+  renderTrail1: 0
+  renderTrail2: 1
   trail1: {fileID: 1719648959}
   trail2: {fileID: 100549232}
   systemColors:
@@ -544,10 +546,10 @@ MonoBehaviour:
   initialAngle1: 90
   initialAngle2: 90
   formChain: 1
-  chainCount: 10
-  chainPositionSpacing: 0.5
-  initialChainAngle: 60
-  chainAngleSpacing: 0.1
+  chainCount: 500
+  chainPositionSpacing: 1
+  initialChainAngle: 10
+  chainAngleSpacing: 1
   systems:
   - l1: 0
     m1: 0
@@ -748,7 +750,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   lineThickness: 2
-  maxTrailPoints: 1000
+  isTrailActive: 1
   showTrailHead: 1
   trailHeadSize: 20
   trailHeadColor: {r: 1, g: 1, b: 1, a: 1}

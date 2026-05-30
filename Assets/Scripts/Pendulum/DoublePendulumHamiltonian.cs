@@ -38,6 +38,9 @@ public class DoublePendulumHamiltonian : MonoBehaviour
     public float graphScale;
 
     [Header("Graph Point Settings: ")]
+    public bool renderTrail1 = true;
+    public bool renderTrail2 = true;
+    [Space]
     public PendulumTrail trail1;
     public PendulumTrail trail2;
 
@@ -50,7 +53,7 @@ public class DoublePendulumHamiltonian : MonoBehaviour
     [Header("--------------------------------------------------------------------------")]
 
     [Header("Simulation Settings")]
-    [Range(0.1f, 5f)] public float TimeScale;
+    [Range(0.1f, 10f)] public float TimeScale;
 
     [Header("Global Properties: ")]
     public float defaultLength;
@@ -203,24 +206,27 @@ public class DoublePendulumHamiltonian : MonoBehaviour
 
             // --------------------------------------------------------
 
-            if (useGradient)
+            //If We Are Visualizing Either Trail:
+            if (renderTrail1 || renderTrail2)
             {
-                //Calculate Gradient Color Based on System Index:
-                float gradientTime = systems.Count > 1 ? (float)i / (systems.Count - 1) : 0f;
-                Color pathColor = trailGradient.Evaluate(gradientTime);
+                Color pathColor;
+                if (useGradient)
+                {
+                    //Calculate Gradient Color Based on System Index:
+                    float gradientTime = systems.Count > 1 ? (float)i / (systems.Count - 1) : 0f;
+                    pathColor = trailGradient.Evaluate(gradientTime);
+                }
+                else
+                {
+                    //Use Static System Colors for Trails:
+                    pathColor = systemColors[i % systemColors.Count];
+                }
 
-                trail1.AddPoint(i, new Vector2(x1, y1) * graphScale, pathColor);
-                trail2.AddPoint(i, new Vector2(x2, y2) * graphScale, pathColor);
+                //Add Trail Points for Each Mass:
+                if (renderTrail1) trail1.AddPoint(i, new Vector2(x1, y1) * graphScale, pathColor);
+                if (renderTrail2) trail2.AddPoint(i, new Vector2(x2, y2) * graphScale, pathColor);
             }
-            else
-            {
-                //Use Static System Colors for Trails:
-                Color pathColor = systemColors[i % systemColors.Count];
-
-                trail1.AddPoint(i, new Vector2(x1, y1) * graphScale, pathColor);
-                trail2.AddPoint(i, new Vector2(x2, y2) * graphScale, pathColor);
-            }
-
+               
             // --------------------------------------------------------
 
             //Store Updated Pendulum System Back to List:
@@ -325,6 +331,16 @@ public class DoublePendulumHamiltonian : MonoBehaviour
 
             //Store Updated Pendulum System Back to List:
             systems[i] = currentDoublePendulum;
+        }
+
+        //Setup Trail Renderers After All Systems Are Initialized:
+        if (trail1 != null && trail2 != null)
+        {
+            trail1.isTrailActive = renderTrail1;
+            trail2.isTrailActive = renderTrail2;
+
+            trail1.SetupVertexBudget(systems.Count, bothTrailsActive: renderTrail1 && renderTrail2);
+            trail2.SetupVertexBudget(systems.Count, bothTrailsActive: renderTrail1 && renderTrail2);
         }
     }
 

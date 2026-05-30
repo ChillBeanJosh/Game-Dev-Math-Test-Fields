@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasRenderer))]
@@ -13,7 +12,9 @@ public class PendulumTrail : Graphic
 
     [Header("Trail Settings")]
     public float lineThickness = 2f;
-    public int maxTrailPoints = 1000;
+    public int maxPointsPerSystem { get; private set; } = 1000;
+    [Space]
+    public bool isTrailActive = true;
 
     [Header("Trail Head Settings: ")]
     public bool showTrailHead = true;
@@ -22,8 +23,31 @@ public class PendulumTrail : Graphic
     public Color trailHeadColor = Color.white;
     [Range(4, 16)] public int trailHeadSegments = 8;
 
+    public void SetupVertexBudget(int pendulumCount, bool bothTrailsActive)
+    {
+        if(!isTrailActive)
+        {
+            maxPointsPerSystem = 0;
+            ClearAllTrails();
+            return;
+        }
+
+        if (pendulumCount > 0)
+        {
+            // to stay performant. If only ONE trail type is active, we can use the full allocation!
+            int pointsAllocationDivisor = bothTrailsActive ? 8 : 4;
+
+            // Formula: 60,000 vertices total / (Divisor * Number of Pendulums)
+            maxPointsPerSystem = Mathf.Max(10, Mathf.FloorToInt(60000f / (pointsAllocationDivisor * pendulumCount)));
+            Debug.Log($"Vertex Budget Setup: {maxPointsPerSystem} points per system for {pendulumCount} pendulums with both trails active: {bothTrailsActive}");
+        }
+        ClearAllTrails();
+    }
+
     public void AddPoint(int systemId, Vector2 point, Color systemColor)
     {
+        if(!isTrailActive) return;
+
         if (!_systemTrails.ContainsKey(systemId))
         {
             _systemTrails[systemId] = new Queue<Vector2>();
@@ -32,7 +56,7 @@ public class PendulumTrail : Graphic
         Queue<Vector2> pointsQueue = _systemTrails[systemId];
         pointsQueue.Enqueue(point);
 
-        while (pointsQueue.Count > maxTrailPoints)
+        while (pointsQueue.Count > maxPointsPerSystem)
         {
             pointsQueue.Dequeue();
         }
