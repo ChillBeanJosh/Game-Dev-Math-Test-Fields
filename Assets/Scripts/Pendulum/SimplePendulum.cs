@@ -21,13 +21,28 @@ public class SimplePendulum : MonoBehaviour
         [HideInInspector] public Transform massTransform;
         [HideInInspector] public LineRenderer lineRenderer;
     }
+    [Header("--------------------------------------------------------------------------")]
+
+    [Header("Graph Settings: ")]
+    public RectTransform graphContainer;
+    public float graphScale;
+
+    [Header("Graph Point Settings: ")]
+    public GameObject graphPointObjectPrefab;
+    public int maxDataPoints;
+    private Queue<GameObject> activeGraphPoints = new Queue<GameObject>();
+
+    [Header("--------------------------------------------------------------------------")]
+
     [Header("Simulation Settings: ")]
     [Range(0.1f, 5f)] public float TimeScale;
 
     [Header("Global Properties: ")]
     public float defaultLength;
     public float defaultGravity = 9.81f;
-   
+
+    [Header("--------------------------------------------------------------------------")]
+
     [Header("Chain Properties: ")]
     public bool formChain = false;
     [Space]
@@ -36,8 +51,12 @@ public class SimplePendulum : MonoBehaviour
     public float initialChainAngle;
     public float chainAngleSpacing;
 
+    [Header("--------------------------------------------------------------------------")]
+
     [Header("Pendulum Data List: ")]
     public List<Pendulum> pendulums = new List<Pendulum>();
+
+    [Header("--------------------------------------------------------------------------")]
 
     [Header("Prefabs & Materials")]
     public GameObject massPrefab;
@@ -50,12 +69,23 @@ public class SimplePendulum : MonoBehaviour
             Debug.LogError("Mass prefab is not assigned. Please assign a mass prefab in the inspector.");
             return;
         }
+
+        if (graphContainer == null || graphPointObjectPrefab == null)
+        {
+            Debug.LogError("Graph container or graph point prefab is not assigned. Please assign them in the inspector.");
+            return;
+        }
+
         SetupPendulums();
     }
 
     private void FixedUpdate()
     {
         float deltaTime = Time.fixedDeltaTime * TimeScale;
+
+        float graphX = 0f;
+        float graphY = 0f;
+        bool hasGraphData = false;
 
         for (int i = 0; i < pendulums.Count; i++)
         {
@@ -84,8 +114,21 @@ public class SimplePendulum : MonoBehaviour
             currentPendulum.lineRenderer.SetPosition(0, worldPivot);
             currentPendulum.lineRenderer.SetPosition(1, currentPendulum.massTransform.position);
 
+            //Capture Graph Data for First Pendulum:
+            if (i == 0)
+            {
+                graphX = x;
+                graphY = y;
+                hasGraphData = true;
+            }
+
             //Store Updated Pendulum Data:
             pendulums[i] = currentPendulum;
+        }
+
+        if (hasGraphData && graphContainer != null && graphPointObjectPrefab != null)
+        {
+            VisualizeGraph(graphX, graphY);
         }
     }
 
@@ -151,6 +194,28 @@ public class SimplePendulum : MonoBehaviour
 
             //Store Updated Pendulum Data:
             pendulums[i] = currentPendulum;
+        }
+    }
+
+    private void VisualizeGraph(float x, float y)
+    {
+        //Instantiate a New Graph Point Inside the Graph Container:
+        GameObject point = Instantiate(graphPointObjectPrefab, graphContainer, false);
+
+        //Get The Transform of The Graph Point Inside The Graph Container:
+        RectTransform pointRect = point.GetComponent<RectTransform>();
+
+        //Anchor Its Position Based on The Provided x and y Values Multiplied by The Graph Scale:
+        pointRect.anchoredPosition = new Vector2(x * graphScale, y * graphScale);
+
+        //Store The New Graph Point in The Queue:
+        activeGraphPoints.Enqueue(point);
+
+        //If The Queue Reaches The Maximum Number of Data Points, Dequeue the Oldest Point, Then Destroy It to Free Up Resources:
+        if (activeGraphPoints.Count > maxDataPoints)
+        {
+            GameObject oldPoint = activeGraphPoints.Dequeue();
+            Destroy(oldPoint);
         }
     }
 

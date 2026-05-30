@@ -31,6 +31,24 @@ public class DoublePendulumHamiltonian : MonoBehaviour
         [HideInInspector] public Transform mass2Transform;
         [HideInInspector] public LineRenderer lineRenderer2;
     }
+    [Header("--------------------------------------------------------------------------")]
+
+    [Header("Graph Settings: ")]
+    public RectTransform graphContainer;
+    public float graphScale;
+
+    [Header("Graph Point Settings: ")]
+    public PendulumTrail trail1;
+    public PendulumTrail trail2;
+
+    [Header("Visual Settings: ")]
+    public List<Color> systemColors = new List<Color>() { Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta };
+    [Space]
+    public bool useGradient = false;
+    public Gradient trailGradient;
+
+    [Header("--------------------------------------------------------------------------")]
+
     [Header("Simulation Settings")]
     [Range(0.1f, 5f)] public float TimeScale;
 
@@ -43,6 +61,8 @@ public class DoublePendulumHamiltonian : MonoBehaviour
     public float initialAngle1 = 45f;
     public float initialAngle2 = 45f;
 
+    [Header("--------------------------------------------------------------------------")]
+
     [Header("Chain Properties: ")]
     public bool formChain = false;
     [Space]
@@ -51,8 +71,12 @@ public class DoublePendulumHamiltonian : MonoBehaviour
     public float initialChainAngle;
     public float chainAngleSpacing;
 
+    [Header("--------------------------------------------------------------------------")]
+
     [Header("Pendulum Systems Data List: ")]
     public List<DoublePendulumSystem> systems = new List<DoublePendulumSystem>();
+
+    [Header("--------------------------------------------------------------------------")]
 
     [Header("Prefabs & Materials")]
     public GameObject massPrefab;
@@ -65,6 +89,13 @@ public class DoublePendulumHamiltonian : MonoBehaviour
             Debug.LogError("Mass prefab is not assigned!");
             return;
         }
+
+        if (graphContainer == null || trail1 == null || trail2 == null)
+        {
+            Debug.LogError("Graph container or trails are not assigned!");
+            return;
+        }
+
         SetupSystems();
     }
 
@@ -139,7 +170,7 @@ public class DoublePendulumHamiltonian : MonoBehaviour
             // 3. Compute Fresh Angular Velocities with New Momenta
             dTheta1 = (currentDoublePendulum.l2 * currentDoublePendulum.p1 - currentDoublePendulum.l1 * currentDoublePendulum.p2 * cosDelta) / (currentDoublePendulum.l1 * currentDoublePendulum.l1 * currentDoublePendulum.l2 * denominatorCommon);
             dTheta2 = (currentDoublePendulum.l1 * (currentDoublePendulum.m1 + currentDoublePendulum.m2) * currentDoublePendulum.p2 - currentDoublePendulum.l2 * currentDoublePendulum.m2 * currentDoublePendulum.p1 * cosDelta) / (currentDoublePendulum.l1 * currentDoublePendulum.l2 * currentDoublePendulum.l2 * currentDoublePendulum.m2 * denominatorCommon);
-            
+
             // 4. Update Angular Positions Second
             currentDoublePendulum.theta1 += dTheta1 * deltaTime;
             currentDoublePendulum.theta2 += dTheta2 * deltaTime;
@@ -169,6 +200,26 @@ public class DoublePendulumHamiltonian : MonoBehaviour
             //Update Line Renderer For Second Mass:
             currentDoublePendulum.lineRenderer2.SetPosition(0, currentDoublePendulum.mass1Transform.position);
             currentDoublePendulum.lineRenderer2.SetPosition(1, currentDoublePendulum.mass2Transform.position);
+
+            // --------------------------------------------------------
+
+            if (useGradient)
+            {
+                //Calculate Gradient Color Based on System Index:
+                float gradientTime = systems.Count > 1 ? (float)i / (systems.Count - 1) : 0f;
+                Color pathColor = trailGradient.Evaluate(gradientTime);
+
+                trail1.AddPoint(i, new Vector2(x1, y1) * graphScale, pathColor);
+                trail2.AddPoint(i, new Vector2(x2, y2) * graphScale, pathColor);
+            }
+            else
+            {
+                //Use Static System Colors for Trails:
+                Color pathColor = systemColors[i % systemColors.Count];
+
+                trail1.AddPoint(i, new Vector2(x1, y1) * graphScale, pathColor);
+                trail2.AddPoint(i, new Vector2(x2, y2) * graphScale, pathColor);
+            }
 
             // --------------------------------------------------------
 
