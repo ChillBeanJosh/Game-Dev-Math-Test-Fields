@@ -452,11 +452,11 @@ MonoBehaviour:
   TimeScale: 1
   defaultLength: 3
   defaultGravity: 9.81
-  formChain: 0
-  chainCount: 80
-  chainPositionSpacing: 0.5
-  initialChainAngle: 10
-  chainAngleSpacing: 1
+  formChain: 1
+  chainCount: 700
+  chainPositionSpacing: 0.05
+  initialChainAngle: 20
+  chainAngleSpacing: 0.1
   pendulums:
   - length: 0
     gravity: 0
@@ -539,17 +539,17 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 6
     m_NumAlphaKeys: 2
-  TimeScale: 1
+  TimeScale: 2
   defaultLength: 3
   defaultMass: 1
   defaultGravity: 9.81
   initialAngle1: 90
   initialAngle2: 90
-  formChain: 1
-  chainCount: 500
-  chainPositionSpacing: 1
-  initialChainAngle: 10
-  chainAngleSpacing: 1
+  formChain: 0
+  chainCount: 100
+  chainPositionSpacing: 0.1
+  initialChainAngle: 89
+  chainAngleSpacing: 0.001
   systems:
   - l1: 0
     m1: 0
@@ -557,24 +557,10 @@ MonoBehaviour:
     p1: 0
     l2: 0
     m2: 0
-    theta2: 45
+    theta2: 65
     p2: 0
     gravity: 0
     pivotPosition: {x: 0, y: 0, z: 0}
-    mass1Transform: {fileID: 0}
-    lineRenderer1: {fileID: 0}
-    mass2Transform: {fileID: 0}
-    lineRenderer2: {fileID: 0}
-  - l1: 0
-    m1: 0
-    theta1: 90
-    p1: 0
-    l2: 0
-    m2: 0
-    theta2: 45.1
-    p2: 0
-    gravity: 0
-    pivotPosition: {x: 0, y: 0, z: 1}
     mass1Transform: {fileID: 0}
     lineRenderer1: {fileID: 0}
     mass2Transform: {fileID: 0}
