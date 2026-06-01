@@ -574,6 +574,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759244415}
   - component: {fileID: 759244416}
+  - component: {fileID: 759244417}
   m_Layer: 0
   m_Name: Oscillator System
   m_TagString: Untagged
@@ -603,7 +604,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759244414}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b320a660002655942b08a7c2bc1eef48, type: 3}
   m_Name: 
@@ -652,6 +653,53 @@ MonoBehaviour:
     lineRenderer: {fileID: 0}
   massPrefab: {fileID: 3928527100153347932, guid: 3009c023ec2b73a4d9f7eab772dd8637, type: 3}
   lineMaterial: {fileID: 2100000, guid: fc28c8cb2140f0345981bff3c627de89, type: 2}
+--- !u!114 &759244417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759244414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183f207104c64454f91db159a18817a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphContainer: {fileID: 1903620742}
+  graphScale: 30
+  graphPointObjectPrefab: {fileID: 6330093647613910387, guid: f30d3919a813add489c2efe25fd5d953, type: 3}
+  maxDataPoints: 300
+  TimeScale: 1
+  defaultMass: 1
+  defaultSpringLength: 3
+  defaultSpringConstant: 12
+  defaultDampingCoefficient: 1
+  defaultInitialDisplacement: 10
+  defaultGravity: 9.81
+  springCoilSegments: 100
+  springCoilRadius: 0.2
+  springCoilFrequency: 12
+  formChain: 0
+  chainCount: 0
+  chainPositionSpacing: 0
+  initialDisplacementSpacing: 0
+  oscillators:
+  - mass: 0
+    springLength: 0
+    springConstant: 0
+    dampingCoefficient: 0
+    initialDisplacement: 0
+    gravity: 0
+    position: {x: 0, y: 0, z: 0}
+    velocity: {x: 0, y: 0, z: 0}
+    acceleration: {x: 0, y: 0, z: 0}
+    pivotPosition: {x: 0, y: 0, z: 0}
+    equilibriumPosition: {x: 0, y: 0, z: 0}
+    massTransform: {fileID: 0}
+    springLineRenderer: {fileID: 0}
+    dampingLineRenderer: {fileID: 0}
+  massPrefab: {fileID: 3928527100153347932, guid: 3009c023ec2b73a4d9f7eab772dd8637, type: 3}
+  lineMaterial: {fileID: 0}
 --- !u!1 &841848950
 GameObject:
   m_ObjectHideFlags: 0
