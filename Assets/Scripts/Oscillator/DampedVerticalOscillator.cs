@@ -75,7 +75,7 @@ public class DampedVerticalOscillator : MonoBehaviour
 
     [Header("--------------------------------------------------------------------------")]
 
-    [Header("Prefabs & Materials")]
+    [Header("Prefabs & Materials: ")]
     public GameObject massPrefab;
     public Material lineMaterial;
 

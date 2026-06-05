@@ -672,9 +672,9 @@ MonoBehaviour:
   TimeScale: 1
   defaultMass: 1
   defaultSpringLength: 3
-  defaultSpringConstant: 12
-  defaultDampingCoefficient: 1
-  defaultInitialDisplacement: 10
+  defaultSpringConstant: 50
+  defaultDampingCoefficient: 1.5
+  defaultInitialDisplacement: -3
   defaultGravity: 9.81
   springCoilSegments: 100
   springCoilRadius: 0.2
