@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3861749805699906725}
   - component: {fileID: 3089986688739089042}
   m_Layer: 0
-  m_Name: Vehicle Body
+  m_Name: Quarter Car Chassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

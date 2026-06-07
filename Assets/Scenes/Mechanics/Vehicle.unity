@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 16553454}
   - component: {fileID: 16553453}
+  - component: {fileID: 16553455}
   m_Layer: 0
   m_Name: Vehicle
   m_TagString: Untagged
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16553452}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c9a13501bf4f35458126bdb7566c2d3, type: 3}
   m_Name: 
@@ -212,6 +213,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &16553455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16553452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccffbe8c0350332489c5af4d2b400fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphContainer: {fileID: 1801670493}
+  graphScale: 100
+  graphPointPrefabChassis: {fileID: 0}
+  graphPointPrefabFrontWheel: {fileID: 0}
+  graphPointPrefabRearWheel: {fileID: 0}
+  maxDataPoints: 200
+  TimeScale: 1
+  globalGravity: 9.81
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  defaultChassisMass: 800
+  defaultChassisInertiaZ: 1200
+  defaultWheelMassFront: 40
+  defaultWheelMassRear: 45
+  defaultDistA1: 1.2
+  defaultDistA2: 1.4
+  defaultSuspensionLengthFront: 1.5
+  defaultSuspensionKFront: 25000
+  defaultDampingCFront: 1800
+  defaultSuspensionLengthRear: 1.5
+  defaultSuspensionKRear: 28000
+  defaultDampingCRear: 2000
+  defaultTireLengthFront: 0.4
+  defaultTireKtFront: 120000
+  defaultTireLengthRear: 0.4
+  defaultTireKtRear: 130000
+  springCoilSegments: 60
+  springCoilRadius: 0.12
+  springCoilFrequency: 10
+  formChain: 1
+  chainCount: 10
+  chainSpacingX: 2
+  initialDisplacementSpacing: 1
+  halfCars: []
+  chassisPrefab: {fileID: 8885011376335870468, guid: 65ab8c0fa4cbcbc4eb237ea2bd9544b5, type: 3}
+  wheelPrefabFront: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabRear: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  lineMaterial: {fileID: 0}
 --- !u!1 &134212651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1064,7 @@ Transform:
   m_GameObject: {fileID: 1523395454}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 10.3, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
