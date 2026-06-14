@@ -326,14 +326,26 @@ public class HalfCar : MonoBehaviour
             //Assign Default Values if Null or Invalid:
             if (current.chassisMass <= 0) current.chassisMass = defaultChassisMass;
             if (current.chassisInertiaZ <= 0) current.chassisInertiaZ = defaultChassisInertiaZ;
+
             if (current.wheelMassFront <= 0) current.wheelMassFront = defaultWheelMassFront;
             if (current.wheelMassRear <= 0) current.wheelMassRear = defaultWheelMassRear;
+
             if (current.distToFront_a1 <= 0) current.distToFront_a1 = defaultDistA1;
             if (current.distToRear_a2 <= 0) current.distToRear_a2 = defaultDistA2;
+
             if (current.suspensionLengthFront <= 0) current.suspensionLengthFront = defaultSuspensionLengthFront;
+            if (current.suspensionConstantK1 <= 0) current.suspensionConstantK1 = defaultSuspensionKFront;
+            if (current.dampingCoefficientC1 <= 0) current.dampingCoefficientC1 = defaultDampingCFront;
+
             if (current.suspensionLengthRear <= 0) current.suspensionLengthRear = defaultSuspensionLengthRear;
+            if (current.suspensionConstantK2 <= 0) current.suspensionConstantK2 = defaultSuspensionKRear;
+            if (current.dampingCoefficientC2 <= 0) current.dampingCoefficientC2 = defaultDampingCRear;
+
             if (current.tireLengthFront <= 0) current.tireLengthFront = defaultTireLengthFront;
+            if (current.tireConstantKt1 <= 0) current.tireConstantKt1 = defaultTireKtFront;
+
             if (current.tireLengthRear <= 0) current.tireLengthRear = defaultTireLengthRear;
+            if (current.tireConstantKt2 <= 0) current.tireConstantKt2 = defaultTireKtRear;
 
             //Assign Equilibrium Positions Based On Pivot Point:
             float xPos = current.pivotPosition.x;

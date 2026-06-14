@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 16553454}
   - component: {fileID: 16553453}
   - component: {fileID: 16553455}
+  - component: {fileID: 16553456}
   m_Layer: 0
   m_Name: Vehicle
   m_TagString: Untagged
@@ -169,7 +170,7 @@ MonoBehaviour:
   springCoilSegments: 60
   springCoilRadius: 0.12
   springCoilFrequency: 10
-  formChain: 1
+  formChain: 0
   chainCount: 10
   chainSpacingZ: 1.5
   initialDisplacementSpacing: 5
@@ -187,7 +188,7 @@ MonoBehaviour:
     wheelPosition: {x: 0, y: 0, z: 0}
     wheelVelocity: {x: 0, y: 0, z: 0}
     wheelAcceleration: {x: 0, y: 0, z: 0}
-    pivotPosition: {x: 0, y: 0, z: 0}
+    pivotPosition: {x: -5, y: 0, z: 0}
     chassisEquilibrium: {x: 0, y: 0, z: 0}
     wheelEquilibrium: {x: 0, y: 0, z: 0}
     chassisTransform: {fileID: 0}
@@ -227,9 +228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphContainer: {fileID: 1801670493}
   graphScale: 100
-  graphPointPrefabChassis: {fileID: 0}
-  graphPointPrefabFrontWheel: {fileID: 0}
-  graphPointPrefabRearWheel: {fileID: 0}
+  graphPointPrefabChassis: {fileID: 6330093647613910387, guid: f30d3919a813add489c2efe25fd5d953, type: 3}
+  graphPointPrefabFrontWheel: {fileID: 235620530989389404, guid: 17cb39669a202a84986b0c164ca3fcf2, type: 3}
+  graphPointPrefabRearWheel: {fileID: 235620530989389404, guid: 17cb39669a202a84986b0c164ca3fcf2, type: 3}
   maxDataPoints: 200
   TimeScale: 1
   globalGravity: 9.81
@@ -256,13 +257,156 @@ MonoBehaviour:
   springCoilRadius: 0.12
   springCoilFrequency: 10
   formChain: 1
-  chainCount: 10
+  chainCount: 3
   chainSpacingX: 2
   initialDisplacementSpacing: 1
-  halfCars: []
+  halfCars:
+  - chassisMass: 0
+    chassisInertiaZ: 0
+    wheelMassFront: 0
+    wheelMassRear: 0
+    distToFront_a1: 0
+    distToRear_a2: 0
+    suspensionLengthFront: 0
+    suspensionConstantK1: 0
+    dampingCoefficientC1: 0
+    suspensionLengthRear: 0
+    suspensionConstantK2: 0
+    dampingCoefficientC2: 0
+    tireLengthFront: 0
+    tireConstantKt1: 0
+    tireLengthRear: 0
+    tireConstantKt2: 0
+    chassisPosition: {x: 0, y: 0, z: 0}
+    chassisVelocity: {x: 0, y: 0, z: 0}
+    chassisAcceleration: {x: 0, y: 0, z: 0}
+    chassisAngle: {x: 0, y: 0, z: 0}
+    chassisAngularVelocity: {x: 0, y: 0, z: 0}
+    chassisAngularAcceleration: {x: 0, y: 0, z: 0}
+    frontWheelPosition: {x: 0, y: 0, z: 0}
+    frontWheelVelocity: {x: 0, y: 0, z: 0}
+    frontWheelAcceleration: {x: 0, y: 0, z: 0}
+    rearWheelPosition: {x: 0, y: 0, z: 0}
+    rearWheelVelocity: {x: 0, y: 0, z: 0}
+    rearWheelAcceleration: {x: 0, y: 0, z: 0}
+    pivotPosition: {x: 5, y: 0, z: 0}
+    chassisEquilibrium: {x: 0, y: 0, z: 0}
+    frontWheelEquilibrium: {x: 0, y: 0, z: 0}
+    rearWheelEquilibrium: {x: 0, y: 0, z: 0}
+    chassisTransform: {fileID: 0}
+    wheelTransformFront: {fileID: 0}
+    wheelTransformRear: {fileID: 0}
+    suspensionSpringFrontLine: {fileID: 0}
+    suspensionDamperFrontLine: {fileID: 0}
+    tireSpringFrontLine: {fileID: 0}
+    suspensionSpringRearLine: {fileID: 0}
+    suspensionDamperRearLine: {fileID: 0}
+    tireSpringRearLine: {fileID: 0}
   chassisPrefab: {fileID: 8885011376335870468, guid: 65ab8c0fa4cbcbc4eb237ea2bd9544b5, type: 3}
   wheelPrefabFront: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
   wheelPrefabRear: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  lineMaterial: {fileID: 0}
+--- !u!114 &16553456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16553452}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d20e31f994d6c48b812896ddc04cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphContainer: {fileID: 1801670493}
+  graphScale: 100
+  graphPointPrefabChassis: {fileID: 6330093647613910387, guid: f30d3919a813add489c2efe25fd5d953, type: 3}
+  graphPointPrefabRightWheel: {fileID: 235620530989389404, guid: 17cb39669a202a84986b0c164ca3fcf2, type: 3}
+  graphPointPrefabLeftWheel: {fileID: 235620530989389404, guid: 17cb39669a202a84986b0c164ca3fcf2, type: 3}
+  maxDataPoints: 200
+  TimeScale: 1
+  globalGravity: 9.81
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  defaultChassisMass: 800
+  defaultChassisInertiaRoll: 1200
+  defaultWheelMassRight: 40
+  defaultWheelMassLeft: 40
+  defaultDistB1: 1.3
+  defaultDistB2: 1.3
+  defaultSuspensionLengthRight: 1.5
+  defaultSuspensionKRight: 25000
+  defaultDampingCRight: 1800
+  defaultSuspensionLengthLeft: 1.5
+  defaultSuspensionKLeft: 25000
+  defaultDampingCLeft: 1800
+  defaultTireLengthRight: 0.4
+  defaultTireKtRight: 120000
+  defaultTireLengthLeft: 0.4
+  defaultTireKtLeft: 120000
+  defaultAntirollKR: 10000
+  defaultAntirollOffset: 0.4
+  springCoilSegments: 60
+  springCoilRadius: 0.12
+  springCoilFrequency: 10
+  formChain: 1
+  chainCount: 3
+  chainSpacingZ: 4
+  initialDisplacementSpacing: 0.2
+  halfCars:
+  - chassisMass: 0
+    chassisInertiaRoll: 0
+    wheelMassRight: 0
+    wheelMassLeft: 0
+    distToRight_b1: 0
+    distToLeft_b2: 0
+    suspensionLengthRight: 0
+    suspensionConstantK1: 0
+    dampingCoefficientC1: 0
+    suspensionLengthLeft: 0
+    suspensionConstantK2: 0
+    dampingCoefficientC2: 0
+    tireLengthRight: 0
+    tireConstantKt1: 0
+    tireLengthLeft: 0
+    tireConstantKt2: 0
+    antirollStiffnessKR: 0
+    antirollBarHeightOffset: 0
+    useAdvancedModel: 1
+    chassisPosition: {x: 0, y: 0, z: 0}
+    chassisVelocity: {x: 0, y: 0, z: 0}
+    chassisAcceleration: {x: 0, y: 0, z: 0}
+    chassisAngle: {x: 0, y: 0, z: 0}
+    chassisAngularVelocity: {x: 0, y: 0, z: 0}
+    chassisAngularAcceleration: {x: 0, y: 0, z: 0}
+    rightWheelPosition: {x: 0, y: 0, z: 0}
+    rightWheelVelocity: {x: 0, y: 0, z: 0}
+    rightWheelAcceleration: {x: 0, y: 0, z: 0}
+    leftWheelPosition: {x: 0, y: 0, z: 0}
+    leftWheelVelocity: {x: 0, y: 0, z: 0}
+    leftWheelAcceleration: {x: 0, y: 0, z: 0}
+    pivotPosition: {x: 0, y: 0, z: 0}
+    chassisEquilibrium: {x: 0, y: 0, z: 0}
+    rightWheelEquilibrium: {x: 0, y: 0, z: 0}
+    leftWheelEquilibrium: {x: 0, y: 0, z: 0}
+    chassisTransform: {fileID: 0}
+    wheelTransformRight: {fileID: 0}
+    wheelTransformLeft: {fileID: 0}
+    suspensionSpringRightLine: {fileID: 0}
+    suspensionDamperRightLine: {fileID: 0}
+    tireSpringRightLine: {fileID: 0}
+    suspensionSpringLeftLine: {fileID: 0}
+    suspensionDamperLeftLine: {fileID: 0}
+    tireSpringLeftLine: {fileID: 0}
+    antirollLinkLeftLine: {fileID: 0}
+    antirollSpringLeftLine: {fileID: 0}
+    antirollBarCenterLine: {fileID: 0}
+    antirollSpringRightLine: {fileID: 0}
+    antirollLinkRightLine: {fileID: 0}
+  chassisPrefab: {fileID: 3452708413879895066, guid: 8b64e6397ad5d2d48b77c0bd86027f9c, type: 3}
+  wheelPrefabRight: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabLeft: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
   lineMaterial: {fileID: 0}
 --- !u!1 &134212651
 GameObject:
@@ -1064,7 +1208,7 @@ Transform:
   m_GameObject: {fileID: 1523395454}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
