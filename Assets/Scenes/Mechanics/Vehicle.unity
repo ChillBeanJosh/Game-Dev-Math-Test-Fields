@@ -131,6 +131,9 @@ GameObject:
   - component: {fileID: 16553453}
   - component: {fileID: 16553455}
   - component: {fileID: 16553456}
+  - component: {fileID: 16553457}
+  - component: {fileID: 16553458}
+  - component: {fileID: 16553459}
   m_Layer: 0
   m_Name: Vehicle
   m_TagString: Untagged
@@ -221,7 +224,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16553452}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccffbe8c0350332489c5af4d2b400fb9, type: 3}
   m_Name: 
@@ -408,6 +411,277 @@ MonoBehaviour:
   wheelPrefabRight: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
   wheelPrefabLeft: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
   lineMaterial: {fileID: 0}
+--- !u!114 &16553457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16553452}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03cf113c276fcc348a37cd7bad4b6e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphContainer: {fileID: 1801670493}
+  graphScale: 100
+  graphPointPrefabChassis: {fileID: 0}
+  graphPointPrefabFRWheel: {fileID: 0}
+  graphPointPrefabFLWheel: {fileID: 0}
+  graphPointPrefabRRWheel: {fileID: 0}
+  graphPointPrefabRLWheel: {fileID: 0}
+  maxDataPoints: 200
+  TimeScale: 1
+  globalGravity: 9.81
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  defaultChassisMass: 1400
+  defaultChassisInertiaPitch: 2000
+  defaultChassisInertiaRoll: 1600
+  defaultWheelMass: 45
+  defaultDistA1: 1.3
+  defaultDistA2: 1.5
+  defaultDistB1: 1
+  defaultDistB2: 1
+  defaultSuspensionLength: 1.5
+  defaultSuspensionK: 30000
+  defaultDampingC: 2200
+  defaultTireLength: 0.4
+  defaultTireKt: 150000
+  defaultAntirollKR: 12000
+  defaultAntirollOffset: 0.4
+  springCoilSegments: 60
+  springCoilRadius: 0.12
+  springCoilFrequency: 10
+  formChain: 0
+  chainCount: 1
+  chainSpacingX: 5
+  initialDisplacementSpacing: 0.2
+  fullCars:
+  - chassisMass: 0
+    chassisInertiaPitch: 0
+    chassisInertiaRoll: 0
+    wheelMassFR: 0
+    wheelMassFL: 0
+    wheelMassRR: 0
+    wheelMassRL: 0
+    distToFront_a1: 0
+    distToRear_a2: 0
+    distToRight_b1: 0
+    distToLeft_b2: 0
+    suspensionLengthFR: 0
+    suspensionConstantK_FR: 0
+    dampingCoefficientC_FR: 0
+    suspensionLengthFL: 0
+    suspensionConstantK_FL: 0
+    dampingCoefficientC_FL: 0
+    suspensionLengthRR: 0
+    suspensionConstantK_RR: 0
+    dampingCoefficientC_RR: 0
+    suspensionLengthRL: 0
+    suspensionConstantK_RL: 0
+    dampingCoefficientC_RL: 0
+    tireLengthFR: 0
+    tireConstantKt_FR: 0
+    tireLengthFL: 0
+    tireConstantKt_FL: 0
+    tireLengthRR: 0
+    tireConstantKt_RR: 0
+    tireLengthRL: 0
+    tireConstantKt_RL: 0
+    useAdvancedModel: 1
+    useFrontAntirollBarOnly: 1
+    antirollStiffnessKR_Front: 0
+    antirollStiffnessKR_Rear: 0
+    antirollBarHeightOffset: 0
+    chassisPosition: {x: 0, y: 0, z: 0}
+    chassisVelocity: {x: 0, y: 0, z: 0}
+    chassisAcceleration: {x: 0, y: 0, z: 0}
+    chassisAngle: {x: 0, y: 0, z: 0}
+    chassisAngularVelocity: {x: 0, y: 0, z: 0}
+    chassisAngularAcceleration: {x: 0, y: 0, z: 0}
+    frWheelPosition: {x: 0, y: 0, z: 0}
+    frWheelVelocity: {x: 0, y: 0, z: 0}
+    frWheelAcceleration: {x: 0, y: 0, z: 0}
+    flWheelPosition: {x: 0, y: 0, z: 0}
+    flWheelVelocity: {x: 0, y: 0, z: 0}
+    flWheelAcceleration: {x: 0, y: 0, z: 0}
+    rrWheelPosition: {x: 0, y: 0, z: 0}
+    rrWheelVelocity: {x: 0, y: 0, z: 0}
+    rrWheelAcceleration: {x: 0, y: 0, z: 0}
+    rlWheelPosition: {x: 0, y: 0, z: 0}
+    rlWheelVelocity: {x: 0, y: 0, z: 0}
+    rlWheelAcceleration: {x: 0, y: 0, z: 0}
+    pivotPosition: {x: 0, y: 0, z: 0}
+    chassisEquilibrium: {x: 0, y: 0, z: 0}
+    frWheelEquilibrium: {x: 0, y: 0, z: 0}
+    flWheelEquilibrium: {x: 0, y: 0, z: 0}
+    rrWheelEquilibrium: {x: 0, y: 0, z: 0}
+    rlWheelEquilibrium: {x: 0, y: 0, z: 0}
+    chassisTransform: {fileID: 0}
+    wheelTransformFR: {fileID: 0}
+    wheelTransformFL: {fileID: 0}
+    wheelTransformRR: {fileID: 0}
+    wheelTransformRL: {fileID: 0}
+    suspSpringFRLine: {fileID: 0}
+    suspDamperFRLine: {fileID: 0}
+    tireSpringFRLine: {fileID: 0}
+    suspSpringFLLine: {fileID: 0}
+    suspDamperFLLine: {fileID: 0}
+    tireSpringFLLine: {fileID: 0}
+    suspSpringRRLine: {fileID: 0}
+    suspDamperRRLine: {fileID: 0}
+    tireSpringRRLine: {fileID: 0}
+    suspSpringRLLine: {fileID: 0}
+    suspDamperRLLine: {fileID: 0}
+    tireSpringRLLine: {fileID: 0}
+    antirollFrontCenterLine: {fileID: 0}
+    antirollRearCenterLine: {fileID: 0}
+  - chassisMass: 0
+    chassisInertiaPitch: 0
+    chassisInertiaRoll: 0
+    wheelMassFR: 0
+    wheelMassFL: 0
+    wheelMassRR: 0
+    wheelMassRL: 0
+    distToFront_a1: 0
+    distToRear_a2: 0
+    distToRight_b1: 0
+    distToLeft_b2: 0
+    suspensionLengthFR: 0
+    suspensionConstantK_FR: 0
+    dampingCoefficientC_FR: 0
+    suspensionLengthFL: 0
+    suspensionConstantK_FL: 0
+    dampingCoefficientC_FL: 0
+    suspensionLengthRR: 0
+    suspensionConstantK_RR: 0
+    dampingCoefficientC_RR: 0
+    suspensionLengthRL: 0
+    suspensionConstantK_RL: 0
+    dampingCoefficientC_RL: 0
+    tireLengthFR: 0
+    tireConstantKt_FR: 0
+    tireLengthFL: 0
+    tireConstantKt_FL: 0
+    tireLengthRR: 0
+    tireConstantKt_RR: 0
+    tireLengthRL: 0
+    tireConstantKt_RL: 0
+    useAdvancedModel: 1
+    useFrontAntirollBarOnly: 0
+    antirollStiffnessKR_Front: 0
+    antirollStiffnessKR_Rear: 0
+    antirollBarHeightOffset: 0
+    chassisPosition: {x: 0, y: 0, z: 0}
+    chassisVelocity: {x: 0, y: 0, z: 0}
+    chassisAcceleration: {x: 0, y: 0, z: 0}
+    chassisAngle: {x: 0, y: 0, z: 0}
+    chassisAngularVelocity: {x: 0, y: 0, z: 0}
+    chassisAngularAcceleration: {x: 0, y: 0, z: 0}
+    frWheelPosition: {x: 0, y: 0, z: 0}
+    frWheelVelocity: {x: 0, y: 0, z: 0}
+    frWheelAcceleration: {x: 0, y: 0, z: 0}
+    flWheelPosition: {x: 0, y: 0, z: 0}
+    flWheelVelocity: {x: 0, y: 0, z: 0}
+    flWheelAcceleration: {x: 0, y: 0, z: 0}
+    rrWheelPosition: {x: 0, y: 0, z: 0}
+    rrWheelVelocity: {x: 0, y: 0, z: 0}
+    rrWheelAcceleration: {x: 0, y: 0, z: 0}
+    rlWheelPosition: {x: 0, y: 0, z: 0}
+    rlWheelVelocity: {x: 0, y: 0, z: 0}
+    rlWheelAcceleration: {x: 0, y: 0, z: 0}
+    pivotPosition: {x: 5, y: 0, z: 0}
+    chassisEquilibrium: {x: 0, y: 0, z: 0}
+    frWheelEquilibrium: {x: 0, y: 0, z: 0}
+    flWheelEquilibrium: {x: 0, y: 0, z: 0}
+    rrWheelEquilibrium: {x: 0, y: 0, z: 0}
+    rlWheelEquilibrium: {x: 0, y: 0, z: 0}
+    chassisTransform: {fileID: 0}
+    wheelTransformFR: {fileID: 0}
+    wheelTransformFL: {fileID: 0}
+    wheelTransformRR: {fileID: 0}
+    wheelTransformRL: {fileID: 0}
+    suspSpringFRLine: {fileID: 0}
+    suspDamperFRLine: {fileID: 0}
+    tireSpringFRLine: {fileID: 0}
+    suspSpringFLLine: {fileID: 0}
+    suspDamperFLLine: {fileID: 0}
+    tireSpringFLLine: {fileID: 0}
+    suspSpringRRLine: {fileID: 0}
+    suspDamperRRLine: {fileID: 0}
+    tireSpringRRLine: {fileID: 0}
+    suspSpringRLLine: {fileID: 0}
+    suspDamperRLLine: {fileID: 0}
+    tireSpringRLLine: {fileID: 0}
+    antirollFrontCenterLine: {fileID: 0}
+    antirollRearCenterLine: {fileID: 0}
+  chassisPrefab: {fileID: 3289157651415042269, guid: 0e3cecfd9f5300041bd30fcf38f43b96, type: 3}
+  wheelPrefabFR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabFL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabRR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabRL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  lineMaterial: {fileID: 0}
+--- !u!114 &16553458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16553452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7adcb5a964371949bafc9685c719860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputController: {fileID: 16553459}
+  TimeScale: 1
+  globalGravity: 9.81
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  driverThrottleBrakePower: 12000
+  defaultChassisMass: 1400
+  defaultInertiaPitch: 2000
+  defaultInertiaRoll: 1600
+  defaultInertiaYaw: 2400
+  defaultCorneringStiffness: 45000
+  defaultMaxSteerAngle: 30
+  defaultWheelMass: 45
+  defaultSuspensionK: 30000
+  defaultDampingC: 2200
+  defaultSuspensionLength: 1.5
+  defaultTireKt: 150000
+  defaultTireLength: 0.4
+  formChain: 1
+  chainCount: 1
+  chainSpacingX: 6
+  fullCars: []
+  chassisPrefab: {fileID: 3289157651415042269, guid: 0e3cecfd9f5300041bd30fcf38f43b96, type: 3}
+  wheelPrefabFR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabFL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabRR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabRL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  lineMaterial: {fileID: 0}
+--- !u!114 &16553459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16553452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eabca0dd92bdaa042bdaafca2b220c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMapping:
+    forwardKey: 119
+    backwardKey: 115
+    leftKey: 97
+    rightKey: 100
+  carOverrides: []
 --- !u!1 &134212651
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,12 +922,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596534868}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1368494495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &596534872
 MonoBehaviour:
@@ -1037,6 +1311,73 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &1368494494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1368494495}
+  - component: {fileID: 1368494497}
+  - component: {fileID: 1368494496}
+  m_Layer: 0
+  m_Name: Camera Juice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1368494495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368494494}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 596534871}
+  m_Father: {fileID: 1747785025}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1368494496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368494494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfd0614403320244ad295338d745cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  halfLife: 0.075
+  frequency: 18
+  angularDisplacement: 2
+  linearDisplacement: 0.05
+--- !u!114 &1368494497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368494494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ed7c891068c9e64b9b522276fd28454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamping: 0.5
+  decayDamping: 0.3
+  walkStrength: 0.075
+  slideStrength: 0.2
+  strengthResponse: 5
 --- !u!1 &1523002127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1550,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 10, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1276,6 +1617,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1747785023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1747785025}
+  - component: {fileID: 1747785024}
+  m_Layer: 0
+  m_Name: Camera Base
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1747785024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747785023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e472005d44a4bcd4a983f9f23f7e6809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 16553454}
+  distance: 6
+  height: 2
+  positionDamping: 5
+  rotationDamping: 3
+  filterHighFrequencyDynamics: 1
+--- !u!4 &1747785025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747785023}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.8, y: 12.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1368494495}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1801670492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,9 +1853,9 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 596534871}
   - {fileID: 1173988468}
   - {fileID: 16553454}
   - {fileID: 2116512782}
   - {fileID: 510865414}
   - {fileID: 1523395458}
+  - {fileID: 1747785025}
