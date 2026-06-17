@@ -419,7 +419,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16553452}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03cf113c276fcc348a37cd7bad4b6e28, type: 3}
   m_Name: 
@@ -445,7 +445,7 @@ MonoBehaviour:
   defaultDistA2: 1.5
   defaultDistB1: 1
   defaultDistB2: 1
-  defaultSuspensionLength: 1.5
+  defaultSuspensionLength: 1.2
   defaultSuspensionK: 30000
   defaultDampingC: 2200
   defaultTireLength: 0.4
@@ -619,10 +619,10 @@ MonoBehaviour:
     antirollFrontCenterLine: {fileID: 0}
     antirollRearCenterLine: {fileID: 0}
   chassisPrefab: {fileID: 3289157651415042269, guid: 0e3cecfd9f5300041bd30fcf38f43b96, type: 3}
-  wheelPrefabFR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabFL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabRR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabRL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabFR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabFL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
   lineMaterial: {fileID: 0}
 --- !u!114 &16553458
 MonoBehaviour:
@@ -660,10 +660,10 @@ MonoBehaviour:
   chainSpacingX: 6
   fullCars: []
   chassisPrefab: {fileID: 3289157651415042269, guid: 0e3cecfd9f5300041bd30fcf38f43b96, type: 3}
-  wheelPrefabFR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabFL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabRR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabRL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabFR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabFL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
   lineMaterial: {fileID: 0}
   cameraLean: {fileID: 0}
   cameraSpring: {fileID: 0}
@@ -674,7 +674,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16553452}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eabca0dd92bdaa042bdaafca2b220c87, type: 3}
   m_Name: 
@@ -692,7 +692,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16553452}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17d6b7ceaf301ee40a04f633e81bd2fe, type: 3}
   m_Name: 
@@ -1142,39 +1142,13 @@ GameObject:
   - component: {fileID: 693617374}
   - component: {fileID: 693617373}
   - component: {fileID: 693617372}
-  - component: {fileID: 693617371}
   m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!114 &693617371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 693617370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c55970d3929d4d043b77ec27ede69b02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waveCount: 0
-  minAmplitude: 0.1
-  baseAmplitude: 0.2
-  maxAmplitude: 0.3
-  minWaveLength: 10
-  maxWaveLength: 20
-  minSpeed: 5
-  maxSpeed: 10
-  isOneDimension: 0
-  waves: []
-  Smoothing: 0.15
-  globalSteepness: 0.6
-  allowWaveFolding: 1
+  m_IsActive: 0
 --- !u!64 &693617372
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1918,6 +1892,141 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801670492}
   m_CullTransparentMesh: 1
+--- !u!1 &1817095061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817095066}
+  - component: {fileID: 1817095065}
+  - component: {fileID: 1817095064}
+  - component: {fileID: 1817095063}
+  - component: {fileID: 1817095062}
+  m_Layer: 8
+  m_Name: Floor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1817095062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817095061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55970d3929d4d043b77ec27ede69b02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveCount: 120
+  minAmplitude: 0.1
+  baseAmplitude: 0.2
+  maxAmplitude: 0.3
+  minWaveLength: 10
+  maxWaveLength: 20
+  minSpeed: 5
+  maxSpeed: 10
+  isOneDimension: 0
+  waves: []
+  Smoothing: 0.15
+  globalSteepness: 0.6
+  allowWaveFolding: 1
+--- !u!64 &1817095063
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817095061}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1817095064
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817095061}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 8feb7d574fbc428469f1419d9361f985, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1817095065
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817095061}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1817095066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817095061}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.89, y: -0.5960357, z: -0.43}
+  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2116512778
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,3 +2140,4 @@ SceneRoots:
   - {fileID: 510865414}
   - {fileID: 1747785025}
   - {fileID: 693617376}
+  - {fileID: 1817095066}
