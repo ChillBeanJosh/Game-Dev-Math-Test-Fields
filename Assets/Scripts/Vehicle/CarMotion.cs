@@ -105,15 +105,21 @@ public class CarMotion : MonoBehaviour
 
     [Header("Global Default Profiles:")]
     public float defaultChassisMass = 1400f;
+    [Space]
     public float defaultInertiaPitch = 2000f;
     public float defaultInertiaRoll = 1600f;
     public float defaultInertiaYaw = 2400f;
+    [Space]
     public float defaultCorneringStiffness = 45000f;
     public float defaultMaxSteerAngle = 30f;
+    [Space]
     public float defaultWheelMass = 45f;
+    [Space]
+    public float defaultSuspensionLength = 1.2f;
+    [Space]
     public float defaultSuspensionK = 32000f;
     public float defaultDampingC = 2500f;
-    public float defaultSuspensionLength = 1.2f;
+    [Space]
     public float defaultTireKt = 160000f;
     public float defaultTireLength = 0.35f;
 

@@ -8,40 +8,40 @@ public class FullCar : MonoBehaviour
     {
         [Header("Mass Profiles:")]
         public float chassisMass;
-        public float chassisInertiaPitch; // I_y or I_z depending on axis (Pitch Inertia)
-        public float chassisInertiaRoll;  // I_x (Roll Inertia)
+        public float chassisInertiaPitch; 
+        public float chassisInertiaRoll;  
         [Space]
-        public float wheelMassFR; // m_fr
-        public float wheelMassFL; // m_fl
-        public float wheelMassRR; // m_rr
-        public float wheelMassRL; // m_rl
+        public float wheelMassFR;
+        public float wheelMassFL;
+        public float wheelMassRR; 
+        public float wheelMassRL;
 
         [Header("Chassis Geometry (Distance from COM):")]
-        public float distToFront_a1; // a_1 (Longitudinal Front)
-        public float distToRear_a2;  // a_2 (Longitudinal Rear)
+        public float distToFront_a1; 
+        public float distToRear_a2; 
         [Space]
-        public float distToRight_b1; // b_1 (Lateral Right)
-        public float distToLeft_b2;  // b_2 (Lateral Left)
+        public float distToRight_b1; 
+        public float distToLeft_b2; 
 
-        [Header("Front Right Suspension Profile:")]
+        [Header("Front-Right Suspension Profile:")]
         public float suspensionLengthFR;
         [Space]
         public float suspensionConstantK_FR;
         public float dampingCoefficientC_FR;
 
-        [Header("Front Left Suspension Profile:")]
+        [Header("Front-Left Suspension Profile:")]
         public float suspensionLengthFL;
         [Space]
         public float suspensionConstantK_FL;
         public float dampingCoefficientC_FL;
 
-        [Header("Rear Right Suspension Profile:")]
+        [Header("Rear-Right Suspension Profile:")]
         public float suspensionLengthRR;
         [Space]
         public float suspensionConstantK_RR;
         public float dampingCoefficientC_RR;
 
-        [Header("Rear Left Suspension Profile:")]
+        [Header("Rear-Left Suspension Profile:")]
         public float suspensionLengthRL;
         [Space]
         public float suspensionConstantK_RL;
@@ -74,7 +74,7 @@ public class FullCar : MonoBehaviour
         public Vector3 chassisVelocity;
         public Vector3 chassisAcceleration;
         [Space(10)]
-        public Vector3 chassisAngle; // .x = Pitch, .z = Roll
+        public Vector3 chassisAngle; 
         public Vector3 chassisAngularVelocity;
         public Vector3 chassisAngularAcceleration;
         [Space(20)]
@@ -110,7 +110,6 @@ public class FullCar : MonoBehaviour
         [HideInInspector] public Transform wheelTransformRR;
         [HideInInspector] public Transform wheelTransformRL;
 
-        // Visuals fields
         [HideInInspector] public LineRenderer suspSpringFRLine;
         [HideInInspector] public LineRenderer suspDamperFRLine;
         [HideInInspector] public LineRenderer tireSpringFRLine;
@@ -127,7 +126,6 @@ public class FullCar : MonoBehaviour
         [HideInInspector] public LineRenderer suspDamperRLLine;
         [HideInInspector] public LineRenderer tireSpringRLLine;
 
-        // Antiroll Bar Center Render Lines
         [HideInInspector] public LineRenderer antirollFrontCenterLine;
         [HideInInspector] public LineRenderer antirollRearCenterLine;
     }
@@ -173,10 +171,10 @@ public class FullCar : MonoBehaviour
     [Space]
     public float defaultWheelMass = 45f;
     [Space]
-    public float defaultDistA1 = 1.3f; // Front
-    public float defaultDistA2 = 1.5f; // Rear
-    public float defaultDistB1 = 0.8f; // Right
-    public float defaultDistB2 = 0.8f; // Left
+    public float defaultDistA1 = 1.3f; 
+    public float defaultDistA2 = 1.5f; 
+    public float defaultDistB1 = 0.8f; 
+    public float defaultDistB2 = 0.8f; 
     [Space]
     public float defaultSuspensionLength = 1.5f;
     public float defaultSuspensionK = 30000f;
@@ -242,62 +240,67 @@ public class FullCar : MonoBehaviour
         {
             FullCarSystem car = fullCars[i];
 
+            //Skip Car if Mass Transforms Are Not Assigned:
             if (car.chassisTransform == null || car.wheelTransformFR == null || car.wheelTransformFL == null || car.wheelTransformRR == null || car.wheelTransformRL == null) continue;
 
-            // Sample road surface underneath all 4 wheel nodes
+            //Calculate The Distance From The Wheel To The Road Surface Using A Raycast:
             float roadY_FR = SampleRoadHeightAtPoint(car.pivotPosition.x + car.distToRight_b1, car.pivotPosition.z + car.distToFront_a1);
             float roadY_FL = SampleRoadHeightAtPoint(car.pivotPosition.x - car.distToLeft_b2, car.pivotPosition.z + car.distToFront_a1);
             float roadY_RR = SampleRoadHeightAtPoint(car.pivotPosition.x + car.distToRight_b1, car.pivotPosition.z - car.distToRear_a2);
             float roadY_RL = SampleRoadHeightAtPoint(car.pivotPosition.x - car.distToLeft_b2, car.pivotPosition.z - car.distToRear_a2);
 
-            // Translational state profiles
+            //Store Position and Velocity Variables For Chassis:
             float x = car.chassisPosition.y;
             float xDot = car.chassisVelocity.y;
 
-            // Rotational profiles (Pitch = X, Roll = Z)
+            //Store Angular Position and Velocity Variables For Chassis:
             float theta = car.chassisAngle.x;
             float thetaDot = car.chassisAngularVelocity.x;
 
             float phi = car.chassisAngle.z;
             float phiDot = car.chassisAngularVelocity.z;
 
-            // Wheel state extractions
+            //Store Position and Velocity Variables For Each Wheel:
             float xFR = car.frWheelPosition.y; float xFRDot = car.frWheelVelocity.y;
             float xFL = car.flWheelPosition.y; float xFLDot = car.flWheelVelocity.y;
             float xRR = car.rrWheelPosition.y; float xRRDot = car.rrWheelVelocity.y;
             float xRL = car.rlWheelPosition.y; float xRLDot = car.rlWheelVelocity.y;
 
-            // Combined Deflections (Maintaining script sign conventions)
+            //Calculate Change in Position and Velocity For The Spring-Damper Systems For Front-Right Suspension:
             float suspDeltaPosFR = x - xFR - (car.distToFront_a1 * theta) + (car.distToRight_b1 * phi);
             float suspDeltaVelFR = xDot - xFRDot - (car.distToFront_a1 * thetaDot) + (car.distToRight_b1 * phiDot);
 
+            //Calculate Change in Position and Velocity For The Spring-Damper Systems For Front-Left Suspension:
             float suspDeltaPosFL = x - xFL - (car.distToFront_a1 * theta) - (car.distToLeft_b2 * phi);
             float suspDeltaVelFL = xDot - xFLDot - (car.distToFront_a1 * thetaDot) - (car.distToLeft_b2 * phiDot);
 
+            //Calculate Change in Position and Velocity For The Spring-Damper Systems For Rear-Right Suspension:
             float suspDeltaPosRR = x - xRR + (car.distToRear_a2 * theta) + (car.distToRight_b1 * phi);
             float suspDeltaVelRR = xDot - xRRDot + (car.distToRear_a2 * thetaDot) + (car.distToRight_b1 * phiDot);
 
+            //Calculate Change in Position and Velocity For The Spring-Damper Systems For Rear-Left Suspension:
             float suspDeltaPosRL = x - xRL + (car.distToRear_a2 * theta) - (car.distToLeft_b2 * phi);
             float suspDeltaVelRL = xDot - xRLDot + (car.distToRear_a2 * thetaDot) - (car.distToLeft_b2 * phiDot);
 
-            // Tire Ground Contact Checks
+            //Change in Position For The Tire Spring Based On Contact With The Road Surface:
             float tireDeltaPosFR = xFR - roadY_FR;
             float tireDeltaPosFL = xFL - roadY_FL;
             float tireDeltaPosRR = xRR - roadY_RR;
             float tireDeltaPosRL = xRL - roadY_RL;
 
+            //Apply Tire Force Only When The Tire Is Compressed Against The Road Surface, Otherwise It Should Not Exert Any Force:
             float forceTireFR = (tireDeltaPosFR < 0f) ? car.tireConstantKt_FR * tireDeltaPosFR : 0f;
             float forceTireFL = (tireDeltaPosFL < 0f) ? car.tireConstantKt_FL * tireDeltaPosFL : 0f;
             float forceTireRR = (tireDeltaPosRR < 0f) ? car.tireConstantKt_RR * tireDeltaPosRR : 0f;
             float forceTireRL = (tireDeltaPosRL < 0f) ? car.tireConstantKt_RL * tireDeltaPosRL : 0f;
 
-            // Suspension forces acting between masses
+            //Equations of Motion For Half Car System, Derived Through Lagrangian Mechanics:
             float F_FR = (car.suspensionConstantK_FR * suspDeltaPosFR) + (car.dampingCoefficientC_FR * suspDeltaVelFR);
             float F_FL = (car.suspensionConstantK_FL * suspDeltaPosFL) + (car.dampingCoefficientC_FL * suspDeltaVelFL);
             float F_RR = (car.suspensionConstantK_RR * suspDeltaPosRR) + (car.dampingCoefficientC_RR * suspDeltaVelRR);
             float F_RL = (car.suspensionConstantK_RL * suspDeltaPosRL) + (car.dampingCoefficientC_RL * suspDeltaVelRL);
 
-            // Antiroll Bar Auxiliary Calculations
+            //Antiroll Bar Torque Calculation:
             float M_R_Front = 0f;
             float M_R_Rear = 0f;
             float w = car.distToRight_b1 + car.distToLeft_b2;
@@ -321,7 +324,6 @@ public class FullCar : MonoBehaviour
                 }
             }
 
-            // Coupled 7-DOF Equations of Motion (Lagrangian Matrix Breakdown)
             float accBounce = (-F_FR - F_FL - F_RR - F_RL) / car.chassisMass - globalGravity;
             float accPitch = (car.distToFront_a1 * (F_FR + F_FL) - car.distToRear_a2 * (F_RR + F_RL)) / car.chassisInertiaPitch;
             float accRoll = (-car.distToRight_b1 * (F_FR + F_RR) + car.distToLeft_b2 * (F_FL + F_RL) + M_R_Front + M_R_Rear) / car.chassisInertiaRoll;
@@ -331,43 +333,50 @@ public class FullCar : MonoBehaviour
             float accWheelRR = (F_RR - forceTireRR) / car.wheelMassRR - globalGravity;
             float accWheelRL = (F_RL - forceTireRL) / car.wheelMassRL - globalGravity;
 
-            // Semi-Implicit Euler Integration
+            //Semi Implicit Euler Integration on Chassis Position:
             car.chassisAcceleration = new Vector3(0, accBounce, 0);
             car.chassisVelocity += car.chassisAcceleration * dt;
             car.chassisPosition += car.chassisVelocity * dt;
 
+            //Semi Implicit Euler Integration on Chassis Rotation:
             car.chassisAngularAcceleration = new Vector3(accPitch, 0, accRoll);
             car.chassisAngularVelocity += car.chassisAngularAcceleration * dt;
             car.chassisAngle += car.chassisAngularVelocity * dt;
 
+            //Semi Implicit Euler Integration on Front-Right Wheel Position:
             car.frWheelAcceleration = new Vector3(0, accWheelFR, 0);
             car.frWheelVelocity += car.frWheelAcceleration * dt;
             car.frWheelPosition += car.frWheelVelocity * dt;
 
+            //Semi Implicit Euler Integration on Front-Left Wheel Position:
             car.flWheelAcceleration = new Vector3(0, accWheelFL, 0);
             car.flWheelVelocity += car.flWheelAcceleration * dt;
             car.flWheelPosition += car.flWheelVelocity * dt;
 
+            //Semi Implicit Euler Integration on Rear-Right Wheel Position:
             car.rrWheelAcceleration = new Vector3(0, accWheelRR, 0);
             car.rrWheelVelocity += car.rrWheelAcceleration * dt;
             car.rrWheelPosition += car.rrWheelVelocity * dt;
 
+            //Semi Implicit Euler Integration on Rear-Left Wheel Position:
             car.rlWheelAcceleration = new Vector3(0, accWheelRL, 0);
             car.rlWheelVelocity += car.rlWheelAcceleration * dt;
             car.rlWheelPosition += car.rlWheelVelocity * dt;
 
-            // Transform Spatial Mapping
+            //Calculate New Chassis Position and Rotation:
             car.chassisTransform.localPosition = car.chassisEquilibrium + car.chassisPosition;
             car.chassisTransform.localRotation = Quaternion.Euler(car.chassisAngle.x * Mathf.Rad2Deg, car.chassisAngle.y * Mathf.Rad2Deg, car.chassisAngle.z * Mathf.Rad2Deg);
 
+            //Calculate New Wheel Positions:
             car.wheelTransformFR.localPosition = car.frWheelEquilibrium + car.frWheelPosition;
             car.wheelTransformFL.localPosition = car.flWheelEquilibrium + car.flWheelPosition;
             car.wheelTransformRR.localPosition = car.rrWheelEquilibrium + car.rrWheelPosition;
             car.wheelTransformRL.localPosition = car.rlWheelEquilibrium + car.rlWheelPosition;
 
-            // Visual Frame Rendering
+            //Update Line Renderer:
             UpdateFullCarVisuals(car, roadY_FR, roadY_FL, roadY_RR, roadY_RL);
 
+            //Capture Graph Data for First Car:
             if (i == 0)
             {
                 graphTimeX = Time.time;
@@ -377,6 +386,7 @@ public class FullCar : MonoBehaviour
                 hasGraphData = true;
             }
 
+            //Store Updated Car Data:
             fullCars[i] = car;
         }
 
@@ -390,10 +400,14 @@ public class FullCar : MonoBehaviour
     {
         if (formChain)
         {
+            //Clear Existing Inspected Full Car Data:
             fullCars.Clear();
+
             for (int i = 0; i < chainCount; i++)
             {
                 FullCarSystem newCar = new FullCarSystem();
+
+                //Assign Default Physical Properties:
                 newCar.chassisMass = defaultChassisMass;
                 newCar.chassisInertiaPitch = defaultChassisInertiaPitch;
                 newCar.chassisInertiaRoll = defaultChassisInertiaRoll;
@@ -418,10 +432,12 @@ public class FullCar : MonoBehaviour
                 newCar.antirollStiffnessKR_Rear = defaultAntirollKR;
                 newCar.antirollBarHeightOffset = defaultAntirollOffset;
 
+                //Calculate Pivot & Equilibrium Positions:
                 float lateralOffset = i * chainSpacingX;
                 newCar.pivotPosition = new Vector3(lateralOffset, 0, 0);
                 newCar.chassisPosition = new Vector3(0, i * initialDisplacementSpacing, 0);
 
+                //Add New Car To The List:
                 fullCars.Add(newCar);
             }
         }
@@ -430,7 +446,7 @@ public class FullCar : MonoBehaviour
         {
             FullCarSystem current = fullCars[i];
 
-            // Structural Validation Fallbacks
+            //Assign Default Values if Null or Invalid:
             if (current.chassisMass <= 0) current.chassisMass = defaultChassisMass;
             if (current.chassisInertiaPitch <= 0) current.chassisInertiaPitch = defaultChassisInertiaPitch;
             if (current.chassisInertiaRoll <= 0) current.chassisInertiaRoll = defaultChassisInertiaRoll;
@@ -477,27 +493,28 @@ public class FullCar : MonoBehaviour
             if (current.antirollStiffnessKR_Front <= 0) current.antirollStiffnessKR_Front = defaultAntirollKR;
             if (current.antirollStiffnessKR_Rear <= 0) current.antirollStiffnessKR_Rear = defaultAntirollKR;
 
+            //Assign Equilibrium Positions Based On Pivot Point:
             float xPos = current.pivotPosition.x;
             float zPos = current.pivotPosition.z;
 
-            // Establish 3D Spatial Equilibriums
             current.frWheelEquilibrium = new Vector3(xPos + current.distToRight_b1, current.tireLengthFR, zPos + current.distToFront_a1);
             current.flWheelEquilibrium = new Vector3(xPos - current.distToLeft_b2, current.tireLengthFL, zPos + current.distToFront_a1);
             current.rrWheelEquilibrium = new Vector3(xPos + current.distToRight_b1, current.tireLengthRR, zPos - current.distToRear_a2);
             current.rlWheelEquilibrium = new Vector3(xPos - current.distToLeft_b2, current.tireLengthRL, zPos - current.distToRear_a2);
             current.chassisEquilibrium = new Vector3(xPos, current.tireLengthFR + current.suspensionLengthFR, zPos);
 
-            // Objects Allocation
+            //Instantiate Chassis Mass Object:
             GameObject chassisObj = Instantiate(chassisPrefab, transform);
             chassisObj.name = $"Full Car Chassis {i + 1}";
             current.chassisTransform = chassisObj.transform;
 
+            //Instantiate Wheel Mass Objects:
             current.wheelTransformFR = Instantiate(wheelPrefabFR, transform).transform; current.wheelTransformFR.name = $"FR Wheel {i + 1}";
             current.wheelTransformFL = Instantiate(wheelPrefabFL, transform).transform; current.wheelTransformFL.name = $"FL Wheel {i + 1}";
             current.wheelTransformRR = Instantiate(wheelPrefabRR, transform).transform; current.wheelTransformRR.name = $"RR Wheel {i + 1}";
             current.wheelTransformRL = Instantiate(wheelPrefabRL, transform).transform; current.wheelTransformRL.name = $"RL Wheel {i + 1}";
 
-            // Visual Links Generation
+            //Create Line Renderers for Suspension and Tire Visuals:
             current.suspSpringFRLine = CreateLineVisual(chassisObj.transform, "FR_Spring", Color.red);
             current.suspDamperFRLine = CreateLineVisual(chassisObj.transform, "FR_Damper", Color.green);
             current.tireSpringFRLine = CreateLineVisual(current.wheelTransformFR, "FR_TireLine", Color.blue);
@@ -514,63 +531,68 @@ public class FullCar : MonoBehaviour
             current.suspDamperRLLine = CreateLineVisual(chassisObj.transform, "RL_Damper", Color.green);
             current.tireSpringRLLine = CreateLineVisual(current.wheelTransformRL, "RL_TireLine", Color.blue);
 
+            //Create Line Renderers for Antiroll Bar Visuals:
             current.antirollFrontCenterLine = CreateLineVisual(chassisObj.transform, "AR_FrontBar", Color.cyan);
             current.antirollRearCenterLine = CreateLineVisual(chassisObj.transform, "AR_RearBar", Color.cyan);
 
-            // Frame Alignments
+            //Initial Position:
             current.chassisTransform.localPosition = current.chassisEquilibrium + current.chassisPosition;
             current.wheelTransformFR.localPosition = current.frWheelEquilibrium + current.frWheelPosition;
             current.wheelTransformFL.localPosition = current.flWheelEquilibrium + current.flWheelPosition;
             current.wheelTransformRR.localPosition = current.rrWheelEquilibrium + current.rrWheelPosition;
             current.wheelTransformRL.localPosition = current.rlWheelEquilibrium + current.rlWheelPosition;
 
+            //Store Updated Car Back Into The List:
             fullCars[i] = current;
         }
     }
 
     private void UpdateFullCarVisuals(FullCarSystem car, float roadFR, float roadFL, float roadRR, float roadRL)
     {
-        // 4-Quadrant Chassis Attachment Reference Nodes
+        //Store World Positions For The Suspension Pivot Points On The Chassis:
         Vector3 nodeFR_World = car.chassisTransform.TransformPoint(new Vector3(car.distToRight_b1, 0, car.distToFront_a1));
         Vector3 nodeFL_World = car.chassisTransform.TransformPoint(new Vector3(-car.distToLeft_b2, 0, car.distToFront_a1));
         Vector3 nodeRR_World = car.chassisTransform.TransformPoint(new Vector3(car.distToRight_b1, 0, -car.distToRear_a2));
         Vector3 nodeRL_World = car.chassisTransform.TransformPoint(new Vector3(-car.distToLeft_b2, 0, -car.distToRear_a2));
 
+        //Store World Positions For Wheel Hubs:
         Vector3 hubFR = car.wheelTransformFR.position; Vector3 hubFL = car.wheelTransformFL.position;
         Vector3 hubRR = car.wheelTransformRR.position; Vector3 hubRL = car.wheelTransformRL.position;
 
+        //Store World Positions For The Contact Points Between The Tires and The Road Surface:
         Vector3 contactFR = transform.TransformPoint(new Vector3(car.pivotPosition.x + car.distToRight_b1, roadFR, car.pivotPosition.z + car.distToFront_a1));
         Vector3 contactFL = transform.TransformPoint(new Vector3(car.pivotPosition.x - car.distToLeft_b2, roadFL, car.pivotPosition.z + car.distToFront_a1));
         Vector3 contactRR = transform.TransformPoint(new Vector3(car.pivotPosition.x + car.distToRight_b1, roadRR, car.pivotPosition.z - car.distToRear_a2));
         Vector3 contactRL = transform.TransformPoint(new Vector3(car.pivotPosition.x - car.distToLeft_b2, roadRL, car.pivotPosition.z - car.distToRear_a2));
 
+        //Offset For Line Render Visibility:
         Vector3 visualOffset = transform.right * 0.12f;
 
-        // Front Right Quad Rendering
+        //Line Renders for Front-Right Suspension:
         RenderCoilSpring(car.suspSpringFRLine, nodeFR_World - visualOffset, hubFR - visualOffset);
         RenderStraightLine(car.suspDamperFRLine, nodeFR_World + visualOffset, hubFR + visualOffset);
         RenderStraightLine(car.tireSpringFRLine, hubFR, contactFR);
 
-        // Front Left Quad Rendering
+        //Line Render for Front-Left Suspension:
         RenderCoilSpring(car.suspSpringFLLine, nodeFL_World - visualOffset, hubFL - visualOffset);
         RenderStraightLine(car.suspDamperFLLine, nodeFL_World + visualOffset, hubFL + visualOffset);
         RenderStraightLine(car.tireSpringFLLine, hubFL, contactFL);
 
-        // Rear Right Quad Rendering
+        //Line Render for Rear-Right Suspension:
         RenderCoilSpring(car.suspSpringRRLine, nodeRR_World - visualOffset, hubRR - visualOffset);
         RenderStraightLine(car.suspDamperRRLine, nodeRR_World + visualOffset, hubRR + visualOffset);
         RenderStraightLine(car.tireSpringRRLine, hubRR, contactRR);
 
-        // Rear Left Quad Rendering
+        //Line Render for Rear-Left Suspension:
         RenderCoilSpring(car.suspSpringRLLine, nodeRL_World - visualOffset, hubRL - visualOffset);
         RenderStraightLine(car.suspDamperRLLine, nodeRL_World + visualOffset, hubRL + visualOffset);
         RenderStraightLine(car.tireSpringRLLine, hubRL, contactRL);
 
-        // Antiroll Bar Torsion Rod Indicators
+        //Line Renders for Antiroll Bar:
         Vector3 frontBarCenter = car.chassisTransform.position + car.chassisTransform.forward * car.distToFront_a1 - car.chassisTransform.up * car.antirollBarHeightOffset;
         RenderStraightLine(car.antirollFrontCenterLine, frontBarCenter - car.chassisTransform.right * car.distToLeft_b2, frontBarCenter + car.chassisTransform.right * car.distToRight_b1);
 
-        // Toggle rear antiroll bar visibility dynamically based on user customize configuration
+        //
         if (!car.useFrontAntirollBarOnly)
         {
             if (!car.antirollRearCenterLine.enabled) car.antirollRearCenterLine.enabled = true;
@@ -586,11 +608,16 @@ public class FullCar : MonoBehaviour
 
     private float SampleRoadHeightAtPoint(float worldX, float worldZ)
     {
+        //Vector At the Car's Pivot Point, With a Vertical Length:
         Vector3 rayOriginWorld = transform.TransformPoint(new Vector3(worldX, 40f, worldZ));
+
+        //If Hit Detected, Return The Local Y Height Relative To The Car's Transform:
         if (Physics.Raycast(rayOriginWorld, Vector3.down, out RaycastHit hit, 100f, groundLayer))
         {
             return transform.InverseTransformPoint(hit.point).y;
         }
+
+        //If No Hit Detected, Assume Flat Ground At Y=0:
         return 0f;
     }
 
@@ -599,16 +626,24 @@ public class FullCar : MonoBehaviour
         GameObject obj = new GameObject(name);
         obj.transform.SetParent(parent, false);
         LineRenderer line = obj.AddComponent<LineRenderer>();
+
         line.positionCount = 2;
-        line.startWidth = 0.04f; line.endWidth = 0.04f;
+        line.startWidth = 0.04f; 
+        line.endWidth = 0.04f;
+
         line.material = lineMaterial != null ? lineMaterial : new Material(Shader.Find("Sprites/Default"));
-        line.startColor = color; line.endColor = color;
+
+        line.startColor = color; 
+        line.endColor = color;
+
         line.useWorldSpace = true;
+
         return line;
     }
 
     private void RenderStraightLine(LineRenderer line, Vector3 start, Vector3 end)
     {
+        //Damper & Tire Compression Line:
         line.positionCount = 2;
         line.SetPosition(0, start);
         line.SetPosition(1, end);
@@ -616,6 +651,7 @@ public class FullCar : MonoBehaviour
 
     private void RenderCoilSpring(LineRenderer line, Vector3 start, Vector3 end)
     {
+        //Suspension Spring Line:
         line.positionCount = springCoilSegments;
         for (int j = 0; j < springCoilSegments; j++)
         {

@@ -8,14 +8,14 @@ public class AntirollHalfCar : MonoBehaviour
     {
         [Header("Mass Profiles:")]
         public float chassisMass;
-        public float chassisInertiaRoll; // I_x in textbook (Roll Inertia)
+        public float chassisInertiaRoll; 
         [Space]
-        public float wheelMassRight; // m_1
-        public float wheelMassLeft;  // m_2
+        public float wheelMassRight; 
+        public float wheelMassLeft;
 
         [Header("Chassis Geometry (Distance from COM):")]
-        public float distToRight_b1; // b_1
-        public float distToLeft_b2;  // b_2
+        public float distToRight_b1; 
+        public float distToLeft_b2; 
 
         [Header("Right Spring Damper Profiles:")]
         public float suspensionLengthRight;
@@ -35,9 +35,9 @@ public class AntirollHalfCar : MonoBehaviour
         public float tireConstantKt2;
 
         [Header("Antiroll Bar Profiles:")]
-        public float antirollStiffnessKR; // k_R
+        public float antirollStiffnessKR; 
         public float antirollBarHeightOffset;
-        public bool useAdvancedModel; // Toggles Eq 13.239 vs Eq 13.238
+        public bool useAdvancedModel;
 
         [Header("Position Properties: ")]
         public Vector3 chassisPosition;
@@ -191,90 +191,98 @@ public class AntirollHalfCar : MonoBehaviour
         {
             RollHalfCarSystem car = halfCars[i];
 
+            //Skip Car if Mass Transforms Are Not Assigned:
             if (car.chassisTransform == null || car.wheelTransformRight == null || car.wheelTransformLeft == null) continue;
 
-            // Lateral offset sample (b1 is positive X, b2 is negative X)
+            //Calculate The Distance From The Wheel To The Road Surface Using A Raycast:
             float roadY1 = SampleRoadHeightAtPoint(car.pivotPosition.x + car.distToRight_b1, car.pivotPosition.z);
             float roadY2 = SampleRoadHeightAtPoint(car.pivotPosition.x - car.distToLeft_b2, car.pivotPosition.z);
 
-            // Extract State Variables (Eq 13.245)
+            //Store Position and Velocity Variables For Chassis:
             float x = car.chassisPosition.y;
             float xDot = car.chassisVelocity.y;
 
-            // Roll around Z axis
+            //Store Angular Position and Velocity Variables For Chassis:
             float phi = car.chassisAngle.z;
             float phiDot = car.chassisAngularVelocity.z;
 
+            //Store Position and Velocity Variables For Right Wheel:
             float x1 = car.rightWheelPosition.y;
             float x1Dot = car.rightWheelVelocity.y;
 
+            //Store Position and Velocity Variables For Left Wheel:
             float x2 = car.leftWheelPosition.y;
             float x2Dot = car.leftWheelVelocity.y;
 
-            // Suspension Deflections (Right = Side 1, Left = Side 2)
+            //Calculate Change in Position and Velocity For The Spring-Damper Systems For Right Suspension:
             float suspDeltaPosRight = x - x1 + (car.distToRight_b1 * phi);
             float suspDeltaVelRight = xDot - x1Dot + (car.distToRight_b1 * phiDot);
 
+            //Calculate Change in Position and Velocity For The Spring-Damper Systems For Left Suspension:
             float suspDeltaPosLeft = x - x2 - (car.distToLeft_b2 * phi);
             float suspDeltaVelLeft = xDot - x2Dot - (car.distToLeft_b2 * phiDot);
 
+            //Change in Position For The Tire Spring Based On Contact With The Road Surface:
             float tireDeltaPosRight = x1 - roadY1;
             float tireDeltaPosLeft = x2 - roadY2;
 
+            //Apply Tire Force Only When The Tire Is Compressed Against The Road Surface, Otherwise It Should Not Exert Any Force:
             float forceTireRight = (tireDeltaPosRight < 0f) ? car.tireConstantKt1 * tireDeltaPosRight : 0f;
             float forceTireLeft = (tireDeltaPosLeft < 0f) ? car.tireConstantKt2 * tireDeltaPosLeft : 0f;
 
-            // Forces exerted BY the chassis ON the suspension
+            //Equations of Motion For Half Car System, Derived Through Lagrangian Mechanics:
             float F1 = (car.suspensionConstantK1 * suspDeltaPosRight) + (car.dampingCoefficientC1 * suspDeltaVelRight);
             float F2 = (car.suspensionConstantK2 * suspDeltaPosLeft) + (car.dampingCoefficientC2 * suspDeltaVelLeft);
 
-            // Antiroll Bar Torque (M_R)
+            //Antiroll Bar Torque Calculation:
             float M_R = 0f;
             if (car.useAdvancedModel)
             {
-                // Eq 13.239
                 float w = car.distToRight_b1 + car.distToLeft_b2;
                 M_R = -car.antirollStiffnessKR * (phi - ((x1 - x2) / w));
             }
             else
             {
-                // Eq 13.238
                 M_R = -car.antirollStiffnessKR * phi;
             }
 
-            // Equations of Motion derived from Lagrange (Eq 13.234 - 13.237)
             float accBounce = (-F1 - F2) / car.chassisMass - globalGravity;
             float accRoll = (-car.distToRight_b1 * F1 + car.distToLeft_b2 * F2 + M_R) / car.chassisInertiaRoll;
             float accWheelRight = (F1 - forceTireRight) / car.wheelMassRight - globalGravity;
             float accWheelLeft = (F2 - forceTireLeft) / car.wheelMassLeft - globalGravity;
 
-            // Semi Implicit Euler Integration
+            //Semi Implicit Euler Integration on Chassis Position:
             car.chassisAcceleration = new Vector3(0, accBounce, 0);
             car.chassisVelocity += car.chassisAcceleration * dt;
             car.chassisPosition += car.chassisVelocity * dt;
 
+            //Semi Implicit Euler Integration on Chassis Rotation:
             car.chassisAngularAcceleration = new Vector3(0, 0, accRoll);
             car.chassisAngularVelocity += car.chassisAngularAcceleration * dt;
             car.chassisAngle += car.chassisAngularVelocity * dt;
 
+            //Semi Implicit Euler Integration on Right Wheel Translation:
             car.rightWheelAcceleration = new Vector3(0, accWheelRight, 0);
             car.rightWheelVelocity += car.rightWheelAcceleration * dt;
             car.rightWheelPosition += car.rightWheelVelocity * dt;
 
+            //Semi Implicit Euler Integration on Left Wheel Translation:
             car.leftWheelAcceleration = new Vector3(0, accWheelLeft, 0);
             car.leftWheelVelocity += car.leftWheelAcceleration * dt;
             car.leftWheelPosition += car.leftWheelVelocity * dt;
 
-            // Transform Updates
+            //Calculate New Chassis Position and Rotation:
             car.chassisTransform.localPosition = car.chassisEquilibrium + car.chassisPosition;
             car.chassisTransform.localRotation = Quaternion.Euler(car.chassisAngle.x * Mathf.Rad2Deg, car.chassisAngle.y * Mathf.Rad2Deg, car.chassisAngle.z * Mathf.Rad2Deg);
 
+            //Calculate New Wheel Positions:
             car.wheelTransformRight.localPosition = car.rightWheelEquilibrium + car.rightWheelPosition;
             car.wheelTransformLeft.localPosition = car.leftWheelEquilibrium + car.leftWheelPosition;
 
-            // Update Visuals
+            //Update Line Renderer:
             UpdateHalfCarVisuals(car, roadY1, roadY2);
 
+            //Capture Graph Data for First Car:
             if (i == 0)
             {
                 graphTimeX = Time.time;
@@ -284,6 +292,7 @@ public class AntirollHalfCar : MonoBehaviour
                 hasGraphData = true;
             }
 
+            //Store Updated Car Data:
             halfCars[i] = car;
         }
 
@@ -297,12 +306,14 @@ public class AntirollHalfCar : MonoBehaviour
     {
         if (formChain)
         {
+            //Clear Existing Inspected Half Car Data:
             halfCars.Clear();
 
             for (int i = 0; i < chainCount; i++)
             {
                 RollHalfCarSystem newCar = new RollHalfCarSystem();
 
+                //Assign Default Physical Properties:
                 newCar.chassisMass = defaultChassisMass;
                 newCar.chassisInertiaRoll = defaultChassisInertiaRoll;
                 newCar.wheelMassRight = defaultWheelMassRight;
@@ -327,11 +338,12 @@ public class AntirollHalfCar : MonoBehaviour
                 newCar.antirollStiffnessKR = defaultAntirollKR;
                 newCar.antirollBarHeightOffset = defaultAntirollOffset;
 
-                // Stack cars along Z axis rather than X for a roll simulation setup
+                //Calculate Pivot & Equilibrium Positions:
                 float longitudinalOffset = i * chainSpacingZ;
                 newCar.pivotPosition = new Vector3(0, 0, longitudinalOffset);
                 newCar.chassisPosition = new Vector3(0, i * initialDisplacementSpacing, 0);
 
+                //Add New Car To The List:
                 halfCars.Add(newCar);
             }
         }
@@ -340,6 +352,7 @@ public class AntirollHalfCar : MonoBehaviour
         {
             RollHalfCarSystem current = halfCars[i];
 
+            //Assign Default Values if Null or Invalid:
             if (current.chassisMass <= 0) current.chassisMass = defaultChassisMass;
             if (current.chassisInertiaRoll <= 0) current.chassisInertiaRoll = defaultChassisInertiaRoll;
 
@@ -363,67 +376,82 @@ public class AntirollHalfCar : MonoBehaviour
             if (current.tireLengthLeft <= 0) current.tireLengthLeft = defaultTireLengthLeft;
             if (current.tireConstantKt2 <= 0) current.tireConstantKt2 = defaultTireKtLeft;
 
+            //Assign Equilibrium Positions Based On Pivot Point:
             float zPos = current.pivotPosition.z;
             current.rightWheelEquilibrium = new Vector3(current.distToRight_b1, current.tireLengthRight, zPos);
             current.leftWheelEquilibrium = new Vector3(-current.distToLeft_b2, current.tireLengthLeft, zPos);
             current.chassisEquilibrium = new Vector3(0f, current.tireLengthRight + current.suspensionLengthRight, zPos);
 
+            //Instantiate Chassis Mass Object:
             GameObject chassisObj = Instantiate(chassisPrefab, transform);
             chassisObj.name = $"Roll Chassis {i + 1}";
             current.chassisTransform = chassisObj.transform;
 
+            //Instantiate Right Wheel Object:
             GameObject wheelRightObj = Instantiate(wheelPrefabRight, transform);
             wheelRightObj.name = $"Right Wheel {i + 1}";
             current.wheelTransformRight = wheelRightObj.transform;
 
+            //Instantiate Left Wheel Object:
             GameObject wheelLeftObj = Instantiate(wheelPrefabLeft, transform);
             wheelLeftObj.name = $"Left Wheel {i + 1}";
             current.wheelTransformLeft = wheelLeftObj.transform;
 
+            //Setup Right Suspension & Right Tire Line Render: 
             current.suspensionSpringRightLine = CreateLineVisual(chassisObj.transform, "RightSpring", Color.red);
             current.suspensionDamperRightLine = CreateLineVisual(chassisObj.transform, "RightDamper", Color.green);
             current.tireSpringRightLine = CreateLineVisual(wheelRightObj.transform, "RightTireLine", Color.blue);
 
+            //Setup Left Suspension & Left Tire Line Render:
             current.suspensionSpringLeftLine = CreateLineVisual(chassisObj.transform, "LeftSpring", Color.red);
             current.suspensionDamperLeftLine = CreateLineVisual(chassisObj.transform, "LeftDamper", Color.green);
             current.tireSpringLeftLine = CreateLineVisual(wheelLeftObj.transform, "LeftTireLine", Color.blue);
 
+            //Setup Antiroll Bar Line Renderers:
             current.antirollLinkLeftLine = CreateLineVisual(chassisObj.transform, "AR_LinkLeft", Color.cyan);
             current.antirollSpringLeftLine = CreateLineVisual(chassisObj.transform, "AR_SpringLeft", Color.cyan);
             current.antirollBarCenterLine = CreateLineVisual(chassisObj.transform, "AR_CenterBar", Color.cyan);
             current.antirollSpringRightLine = CreateLineVisual(chassisObj.transform, "AR_SpringRight", Color.cyan);
             current.antirollLinkRightLine = CreateLineVisual(chassisObj.transform, "AR_LinkRight", Color.cyan);
 
+            //Initial Position:
             current.chassisTransform.localPosition = current.chassisEquilibrium + current.chassisPosition;
             current.wheelTransformRight.localPosition = current.rightWheelEquilibrium + current.rightWheelPosition;
             current.wheelTransformLeft.localPosition = current.leftWheelEquilibrium + current.leftWheelPosition;
 
+            //Store Updated Car Back Into The List:
             halfCars[i] = current;
         }
     }
 
     private void UpdateHalfCarVisuals(RollHalfCarSystem car, float roadRightY, float roadLeftY)
     {
+        //Store World Positions For The Left and Right Suspension Pivot Points On The Chassis:
         Vector3 rightSuspChassisWorld = car.chassisTransform.TransformPoint(new Vector3(car.distToRight_b1, 0, 0));
         Vector3 leftSuspChassisWorld = car.chassisTransform.TransformPoint(new Vector3(-car.distToLeft_b2, 0, 0));
 
+        //Store World Positions For The Left and Right Wheel Hubs:
         Vector3 hubRightWorld = car.wheelTransformRight.position;
         Vector3 hubLeftWorld = car.wheelTransformLeft.position;
 
+        //Store World Positions For The Contact Points Between The Tires and The Road Surface:
         Vector3 contactRightWorld = transform.TransformPoint(new Vector3(car.distToRight_b1, roadRightY, car.pivotPosition.z));
         Vector3 contactLeftWorld = transform.TransformPoint(new Vector3(-car.distToLeft_b2, roadLeftY, car.pivotPosition.z));
 
+        //Offset For Line Render Visibility:
         Vector3 depthOffset = transform.forward * 0.15f;
 
+        //Line Renders for Right Suspension:
         RenderCoilSpring(car.suspensionSpringRightLine, rightSuspChassisWorld - depthOffset, hubRightWorld - depthOffset);
         RenderStraightLine(car.suspensionDamperRightLine, rightSuspChassisWorld + depthOffset, hubRightWorld + depthOffset);
         RenderStraightLine(car.tireSpringRightLine, hubRightWorld, contactRightWorld);
 
+        //Line Renders for Left Suspension:
         RenderCoilSpring(car.suspensionSpringLeftLine, leftSuspChassisWorld - depthOffset, hubLeftWorld - depthOffset);
         RenderStraightLine(car.suspensionDamperLeftLine, leftSuspChassisWorld + depthOffset, hubLeftWorld + depthOffset);
         RenderStraightLine(car.tireSpringLeftLine, hubLeftWorld, contactLeftWorld);
 
-        // Antiroll Bar 5-Segment Logic
+        //Antiroll Bar Segements:
         Vector3 barCenterWorld = car.chassisTransform.position - car.chassisTransform.up * car.antirollBarHeightOffset;
         Vector3 barLeftWorld = barCenterWorld - car.chassisTransform.right * car.distToLeft_b2;
         Vector3 barRightWorld = barCenterWorld + car.chassisTransform.right * car.distToRight_b1;
@@ -431,6 +459,7 @@ public class AntirollHalfCar : MonoBehaviour
         Vector3 linkLeftMidpoint = Vector3.Lerp(hubLeftWorld, barLeftWorld, 0.5f);
         Vector3 linkRightMidpoint = Vector3.Lerp(hubRightWorld, barRightWorld, 0.5f);
 
+        //Line Renders for Antiroll Bar:
         RenderStraightLine(car.antirollLinkLeftLine, hubLeftWorld, linkLeftMidpoint);
         RenderCoilSpring(car.antirollSpringLeftLine, linkLeftMidpoint, barLeftWorld);
         RenderStraightLine(car.antirollBarCenterLine, barLeftWorld, barRightWorld);
@@ -440,13 +469,16 @@ public class AntirollHalfCar : MonoBehaviour
 
     private float SampleRoadHeightAtPoint(float worldX, float worldZ)
     {
+        //Vector At the Car's Pivot Point, With a Vertical Length:
         Vector3 rayOriginWorld = transform.TransformPoint(new Vector3(worldX, 40f, worldZ));
 
+        //If Hit Detected, Return The Local Y Height Relative To The Car's Transform:
         if (Physics.Raycast(rayOriginWorld, Vector3.down, out RaycastHit hit, 100f, groundLayer))
         {
             return transform.InverseTransformPoint(hit.point).y;
         }
 
+        //If No Hit Detected, Assume Flat Ground At Y=0:
         return 0f;
     }
 
@@ -459,9 +491,12 @@ public class AntirollHalfCar : MonoBehaviour
         line.positionCount = 2;
         line.startWidth = 0.04f;
         line.endWidth = 0.04f;
+
         line.material = lineMaterial != null ? lineMaterial : new Material(Shader.Find("Sprites/Default"));
+
         line.startColor = color;
         line.endColor = color;
+
         line.useWorldSpace = true;
 
         return line;
@@ -469,6 +504,7 @@ public class AntirollHalfCar : MonoBehaviour
 
     private void RenderStraightLine(LineRenderer line, Vector3 start, Vector3 end)
     {
+        //Damper & Tire Compression Line:
         line.positionCount = 2;
         line.SetPosition(0, start);
         line.SetPosition(1, end);
@@ -476,6 +512,7 @@ public class AntirollHalfCar : MonoBehaviour
 
     private void RenderCoilSpring(LineRenderer line, Vector3 start, Vector3 end)
     {
+        //Suspension Spring Line:
         line.positionCount = springCoilSegments;
         for (int j = 0; j < springCoilSegments; j++)
         {
@@ -492,21 +529,26 @@ public class AntirollHalfCar : MonoBehaviour
 
     private void VisualizeTriGraph(float timeX, float chassisY, float wheelRightY, float wheelLeftY)
     {
+        //Instantiate, Transform, and Anchor Chassis Position Based on The Provided x and y Values Multiplied by The Graph Scale:
         GameObject cPoint = Instantiate(graphPointPrefabChassis, graphContainer, false);
         RectTransform cRect = cPoint.GetComponent<RectTransform>();
         cRect.anchoredPosition = new Vector2(timeX * graphScale, chassisY * graphScale);
 
+        //Instantiate, Transform, and Anchor Right Wheel Position Based on The Provided x and y Values Multiplied by The Graph Scale:
         GameObject wrPoint = Instantiate(graphPointPrefabRightWheel, graphContainer, false);
         RectTransform wrRect = wrPoint.GetComponent<RectTransform>();
         wrRect.anchoredPosition = new Vector2(timeX * graphScale, wheelRightY * graphScale);
 
+        //Instantiate, Transform, and Anchor Left Wheel Position Based on The Provided x and y Values Multiplied by The Graph Scale:
         GameObject wlPoint = Instantiate(graphPointPrefabLeftWheel, graphContainer, false);
         RectTransform wlRect = wlPoint.GetComponent<RectTransform>();
         wlRect.anchoredPosition = new Vector2(timeX * graphScale, wheelLeftY * graphScale);
 
+        //Store Both Points Together In A Small Structure and Enqueue It For Management:
         TriGraphPoints frame = new TriGraphPoints { chassisPoint = cPoint, wheelPointRight = wrPoint, wheelPointLeft = wlPoint };
         activeGraphPoints.Enqueue(frame);
 
+        //If The Number Of Active Graph Points Exceeds The Maximum Allowed, Dequeue The Oldest Frame and Destroy Its GameObjects To Prevent Memory Bloat:
         if (activeGraphPoints.Count > maxDataPoints)
         {
             TriGraphPoints oldest = activeGraphPoints.Dequeue();
