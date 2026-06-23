@@ -134,14 +134,13 @@ GameObject:
   - component: {fileID: 16553457}
   - component: {fileID: 16553458}
   - component: {fileID: 16553459}
-  - component: {fileID: 16553460}
   m_Layer: 0
   m_Name: Vehicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &16553453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,19 +418,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16553452}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03cf113c276fcc348a37cd7bad4b6e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graphContainer: {fileID: 0}
-  graphScale: 100
-  graphPointPrefabChassis: {fileID: 0}
-  graphPointPrefabFRWheel: {fileID: 0}
-  graphPointPrefabFLWheel: {fileID: 0}
-  graphPointPrefabRRWheel: {fileID: 0}
-  graphPointPrefabRLWheel: {fileID: 0}
-  maxDataPoints: 200
   TimeScale: 1
   globalGravity: 9.81
   groundLayer:
@@ -571,7 +562,7 @@ MonoBehaviour:
     tireLengthRL: 0
     tireConstantKt_RL: 0
     useAdvancedModel: 1
-    useFrontAntirollBarOnly: 0
+    useFrontAntirollBarOnly: 1
     antirollStiffnessKR_Front: 0
     antirollStiffnessKR_Rear: 0
     antirollBarHeightOffset: 0
@@ -633,109 +624,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 16553452}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7adcb5a964371949bafc9685c719860, type: 3}
+  m_Script: {fileID: 11500000, guid: 19cc6d2ae1292994795f6d0405d6e945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputController: {fileID: 16553459}
   TimeScale: 1
   globalGravity: 9.81
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  driverThrottleBrakePower: 12000
-  defaultChassisMass: 1400
-  defaultInertiaPitch: 2000
-  defaultInertiaRoll: 1600
-  defaultInertiaYaw: 2400
-  defaultCorneringStiffness: 45000
-  defaultMaxSteerAngle: 30
-  defaultWheelMass: 45
-  defaultSuspensionLength: 1.5
-  defaultSuspensionK: 30000
-  defaultDampingC: 2200
-  defaultTireKt: 150000
-  defaultTireLength: 0.4
-  formChain: 1
-  chainCount: 1
-  chainSpacingX: 6
-  fullCars: []
-  chassisPrefab: {fileID: 3289157651415042269, guid: 0e3cecfd9f5300041bd30fcf38f43b96, type: 3}
-  wheelPrefabFR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
-  wheelPrefabFL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
-  wheelPrefabRR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
-  wheelPrefabRL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
-  lineMaterial: {fileID: 0}
-  cameraLean: {fileID: 0}
-  cameraSpring: {fileID: 0}
---- !u!114 &16553459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16553452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eabca0dd92bdaa042bdaafca2b220c87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMapping:
-    forwardKey: 119
-    backwardKey: 115
-    leftKey: 97
-    rightKey: 100
-  carOverrides: []
---- !u!114 &16553460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16553452}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17d6b7ceaf301ee40a04f633e81bd2fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimeScale: 1
-  globalGravity: 20
-  airDensity: 1.225
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  forceVectorScale: 0.0003
-  vectorLineWidth: 0.06
+  defaultMaxSteeringAngle: 35
+  defaultEngineTorque: 500
   defaultChassisMass: 1400
   defaultChassisInertiaPitch: 2000
   defaultChassisInertiaRoll: 1600
+  defaultChassisInertiaYaw: 2400
+  defaultWheelRotationalInertia: 1.8
   defaultWheelMass: 45
   defaultDistA1: 1.3
   defaultDistA2: 1.5
-  defaultDistB1: 0.8
-  defaultDistB2: 0.8
-  defaultHeightCOM: 0.55
-  defaultDriveForce: 3500
-  defaultCd: 0.32
-  defaultFrontalArea: 2.2
-  defaultRollingResistance: 0.015
-  defaultSuspensionLength: 1.5
-  defaultSuspensionK: 32000
+  defaultDistB1: 1
+  defaultDistB2: 1
+  defaultSuspensionLength: 1.2
+  defaultSuspensionK: 30000
   defaultDampingC: 2200
-  defaultTireLength: 0.4
+  defaultTireRadius: 0.4
   defaultTireKt: 150000
+  defaultTireU: 0.012
   defaultAntirollKR: 12000
   defaultAntirollOffset: 0.4
+  defaultPeakLongitudinalFriction: 1
+  defaultSlipStiffness: 20
+  minimumForwardVelocity: 0.5
   springCoilSegments: 60
   springCoilRadius: 0.12
   springCoilFrequency: 10
+  formChain: 0
+  chainCount: 1
+  chainSpacingX: 5
+  initialDisplacementSpacing: 0.2
   fullCars:
-  - isPlayerControlled: 1
-    motorForceWASD: 0
-    brakeForceWASD: 0
-    maxSteerAngleWASD: 0
+  - throttleInput: 0
+    steeringInput: 0
+    maxSteerAngle: 0
+    engineTorque: 0
     chassisMass: 0
     chassisInertiaPitch: 0
     chassisInertiaRoll: 0
+    chassisInertiaYaw: 0
+    wheelRotationalInertia: 0
     wheelMassFR: 0
     wheelMassFL: 0
     wheelMassRR: 0
@@ -744,11 +680,9 @@ MonoBehaviour:
     distToRear_a2: 0
     distToRight_b1: 0
     distToLeft_b2: 0
-    heightOfCOM: 0
-    driveForceInput: 0
-    aerodynamicDragCoefficient: 0
-    frontalArea: 0
-    rollingResistanceCoefficient: 0
+    superEllipseFactor_n: 0
+    tireprintHalfLength_a: 0
+    tireprintHalfWidth_b: 0
     suspensionLengthFR: 0
     suspensionConstantK_FR: 0
     dampingCoefficientC_FR: 0
@@ -761,16 +695,20 @@ MonoBehaviour:
     suspensionLengthRL: 0
     suspensionConstantK_RL: 0
     dampingCoefficientC_RL: 0
-    tireLengthFR: 0
+    freeRadiusR0_FR: 0
     tireConstantKt_FR: 0
-    tireLengthFL: 0
+    rollingFrictionCoefficientU_FR: 0
+    freeRadiusR0_FL: 0
     tireConstantKt_FL: 0
-    tireLengthRR: 0
+    rollingFrictionCoefficientU_FL: 0
+    freeRadiusR0_RR: 0
     tireConstantKt_RR: 0
-    tireLengthRL: 0
+    rollingFrictionCoefficientU_RR: 0
+    freeRadiusR0_RL: 0
     tireConstantKt_RL: 0
-    useAdvancedModel: 0
-    useFrontAntirollBarOnly: 0
+    rollingFrictionCoefficientU_RL: 0
+    useAdvancedModel: 1
+    useFrontAntirollBarOnly: 1
     antirollStiffnessKR_Front: 0
     antirollStiffnessKR_Rear: 0
     antirollBarHeightOffset: 0
@@ -780,22 +718,78 @@ MonoBehaviour:
     chassisAngle: {x: 0, y: 0, z: 0}
     chassisAngularVelocity: {x: 0, y: 0, z: 0}
     chassisAngularAcceleration: {x: 0, y: 0, z: 0}
-    planarPosition: {x: 0, y: 0}
-    headingAngle: 0
-    forwardVelocity: 0
-    forwardAcceleration: 0
     frWheelPosition: {x: 0, y: 0, z: 0}
     frWheelVelocity: {x: 0, y: 0, z: 0}
     frWheelAcceleration: {x: 0, y: 0, z: 0}
+    frWheelAngle: {x: 0, y: 0, z: 0}
+    frWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    frWheelAngularAcceleration: {x: 0, y: 0, z: 0}
     flWheelPosition: {x: 0, y: 0, z: 0}
     flWheelVelocity: {x: 0, y: 0, z: 0}
     flWheelAcceleration: {x: 0, y: 0, z: 0}
+    flWheelAngle: {x: 0, y: 0, z: 0}
+    flWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    flWheelAngularAcceleration: {x: 0, y: 0, z: 0}
     rrWheelPosition: {x: 0, y: 0, z: 0}
     rrWheelVelocity: {x: 0, y: 0, z: 0}
     rrWheelAcceleration: {x: 0, y: 0, z: 0}
+    rrWheelAngle: {x: 0, y: 0, z: 0}
+    rrWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    rrWheelAngularAcceleration: {x: 0, y: 0, z: 0}
     rlWheelPosition: {x: 0, y: 0, z: 0}
     rlWheelVelocity: {x: 0, y: 0, z: 0}
     rlWheelAcceleration: {x: 0, y: 0, z: 0}
+    rlWheelAngle: {x: 0, y: 0, z: 0}
+    rlWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    rlWheelAngularAcceleration: {x: 0, y: 0, z: 0}
+    frEffectiveTireRadius: 0
+    frRollingResistanceForce: 0
+    frSlipRatio: 0
+    frLongitudinalFrictionCoefficient: 0
+    frTireNormalForce: 0
+    frTireLongitudinalForce: 0
+    frTireLateralForce: 0
+    frRollMoment: 0
+    frPitchMoment: 0
+    frYawMoment: 0
+    flEffectiveTireRadius: 0
+    flRollingResistanceForce: 0
+    flSlipRatio: 0
+    flLongitudinalFrictionCoefficient: 0
+    flTireNormalForce: 0
+    flTireLongitudinalForce: 0
+    flTireLateralForce: 0
+    flRollMoment: 0
+    flPitchMoment: 0
+    flYawMoment: 0
+    rrEffectiveTireRadius: 0
+    rrRollingResistanceForce: 0
+    rrSlipRatio: 0
+    rrLongitudinalFrictionCoefficient: 0
+    rrTireNormalForce: 0
+    rrTireLongitudinalForce: 0
+    rrTireLateralForce: 0
+    rrRollMoment: 0
+    rrPitchMoment: 0
+    rrYawMoment: 0
+    rlEffectiveTireRadius: 0
+    rlRollingResistanceForce: 0
+    rlSlipRatio: 0
+    rlLongitudinalFrictionCoefficient: 0
+    rlTireNormalForce: 0
+    rlTireLongitudinalForce: 0
+    rlTireLateralForce: 0
+    rlRollMoment: 0
+    rlPitchMoment: 0
+    rlYawMoment: 0
+    peakLongitudinalFriction: 0
+    slipStiffness: 0
+    corneringStiffnessC_alpha: 0
+    peakLateralFriction: 0
+    pneumaticTrail_a_x: 0
+    lateralShift_a_y: 0
+    steerAngleFR: 0
+    steerAngleFL: 0
     pivotPosition: {x: 0, y: 0, z: 0}
     chassisEquilibrium: {x: 0, y: 0, z: 0}
     frWheelEquilibrium: {x: 0, y: 0, z: 0}
@@ -821,22 +815,230 @@ MonoBehaviour:
     tireSpringRLLine: {fileID: 0}
     antirollFrontCenterLine: {fileID: 0}
     antirollRearCenterLine: {fileID: 0}
-    vectorWeightLine: {fileID: 0}
-    vectorInertialLine: {fileID: 0}
-    vectorDragLine: {fileID: 0}
-    vectorNormalFR: {fileID: 0}
-    vectorNormalFL: {fileID: 0}
-    vectorNormalRR: {fileID: 0}
-    vectorNormalRL: {fileID: 0}
-    vectorTractiveFR: {fileID: 0}
-    vectorTractiveFL: {fileID: 0}
-    vectorTractiveRR: {fileID: 0}
-    vectorTractiveRL: {fileID: 0}
   chassisPrefab: {fileID: 3289157651415042269, guid: 0e3cecfd9f5300041bd30fcf38f43b96, type: 3}
-  wheelPrefabFR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabFL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabRR: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
-  wheelPrefabRL: {fileID: 4216420782660054206, guid: 61cec90b5c6d3674da78908afbde2dac, type: 3}
+  wheelPrefabFR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabFL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  lineMaterial: {fileID: 0}
+--- !u!114 &16553459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16553452}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 127009fd42af76c4390b31523f636bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeScale: 1
+  globalGravity: 9.81
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  defaultMaxSteeringAngle: 35
+  defaultEngineTorque: 500
+  defaultChassisMass: 1400
+  defaultChassisInertiaPitch: 2000
+  defaultChassisInertiaRoll: 1600
+  defaultChassisInertiaYaw: 2400
+  defaultWheelRotationalInertia: 1.8
+  defaultWheelMass: 45
+  defaultDistA1: 1.3
+  defaultDistA2: 1.5
+  defaultDistB1: 0.8
+  defaultDistB2: 0.8
+  defaultSuspensionLength: 1.5
+  defaultSuspensionK: 30000
+  defaultDampingC: 2200
+  defaultTireRadius: 0.4
+  defaultTireKt: 150000
+  defaultTireU: 0.012
+  defaultAntirollKR: 12000
+  defaultAntirollOffset: 0.4
+  defaultPeakLongitudinalFriction: 1
+  defaultSlipStiffness: 20
+  minimumForwardVelocity: 0.5
+  springCoilSegments: 60
+  springCoilRadius: 0.12
+  springCoilFrequency: 10
+  formChain: 0
+  chainCount: 1
+  chainSpacingX: 5
+  initialDisplacementSpacing: 0.2
+  fullCars:
+  - slopeAngle: 0
+    steerAngleFR: 0
+    steerAngleFL: 0
+    steerAngularVelocityFR: 0
+    steerAngularVelocityFL: 0
+    throttleInput: 0
+    steeringInput: 0
+    maxSteerAngle: 0
+    engineTorque: 0
+    chassisMass: 0
+    chassisInertiaPitch: 0
+    chassisInertiaRoll: 0
+    chassisInertiaYaw: 0
+    wheelRotationalInertia: 0
+    wheelMassFR: 0
+    wheelMassFL: 0
+    wheelMassRR: 0
+    wheelMassRL: 0
+    distToFront_a1: 0
+    distToRear_a2: 0
+    distToRight_b1: 0
+    distToLeft_b2: 0
+    superEllipseFactor_n: 0
+    tireprintHalfLength_a: 0
+    tireprintHalfWidth_b: 0
+    suspensionLengthFR: 0
+    suspensionConstantK_FR: 0
+    dampingCoefficientC_FR: 0
+    suspensionLengthFL: 0
+    suspensionConstantK_FL: 0
+    dampingCoefficientC_FL: 0
+    suspensionLengthRR: 0
+    suspensionConstantK_RR: 0
+    dampingCoefficientC_RR: 0
+    suspensionLengthRL: 0
+    suspensionConstantK_RL: 0
+    dampingCoefficientC_RL: 0
+    freeRadiusR0_FR: 0
+    tireConstantKt_FR: 0
+    rollingFrictionCoefficientU_FR: 0
+    freeRadiusR0_FL: 0
+    tireConstantKt_FL: 0
+    rollingFrictionCoefficientU_FL: 0
+    freeRadiusR0_RR: 0
+    tireConstantKt_RR: 0
+    rollingFrictionCoefficientU_RR: 0
+    freeRadiusR0_RL: 0
+    tireConstantKt_RL: 0
+    rollingFrictionCoefficientU_RL: 0
+    useAdvancedModel: 1
+    useFrontAntirollBarOnly: 1
+    antirollStiffnessKR_Front: 0
+    antirollStiffnessKR_Rear: 0
+    antirollBarHeightOffset: 0
+    chassisPosition: {x: 0, y: 0, z: 0}
+    chassisVelocity: {x: 0, y: 0, z: 0}
+    chassisAcceleration: {x: 0, y: 0, z: 0}
+    chassisAngle: {x: 0, y: 0, z: 0}
+    chassisAngularVelocity: {x: 0, y: 0, z: 0}
+    chassisAngularAcceleration: {x: 0, y: 0, z: 0}
+    suspensionForceFR: 0
+    frWheelPosition: {x: 0, y: 0, z: 0}
+    frWheelVelocity: {x: 0, y: 0, z: 0}
+    frWheelAcceleration: {x: 0, y: 0, z: 0}
+    frWheelAngle: {x: 0, y: 0, z: 0}
+    frWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    frWheelAngularAcceleration: {x: 0, y: 0, z: 0}
+    suspensionForceFL: 0
+    flWheelPosition: {x: 0, y: 0, z: 0}
+    flWheelVelocity: {x: 0, y: 0, z: 0}
+    flWheelAcceleration: {x: 0, y: 0, z: 0}
+    flWheelAngle: {x: 0, y: 0, z: 0}
+    flWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    flWheelAngularAcceleration: {x: 0, y: 0, z: 0}
+    suspensionForceRR: 0
+    rrWheelPosition: {x: 0, y: 0, z: 0}
+    rrWheelVelocity: {x: 0, y: 0, z: 0}
+    rrWheelAcceleration: {x: 0, y: 0, z: 0}
+    rrWheelAngle: {x: 0, y: 0, z: 0}
+    rrWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    rrWheelAngularAcceleration: {x: 0, y: 0, z: 0}
+    suspensionForceRL: 0
+    rlWheelPosition: {x: 0, y: 0, z: 0}
+    rlWheelVelocity: {x: 0, y: 0, z: 0}
+    rlWheelAcceleration: {x: 0, y: 0, z: 0}
+    rlWheelAngle: {x: 0, y: 0, z: 0}
+    rlWheelAngularVelocity: {x: 0, y: 0, z: 0}
+    rlWheelAngularAcceleration: {x: 0, y: 0, z: 0}
+    antirollMomentFront: 0
+    antirollMomentRear: 0
+    frEffectiveTireRadius: 0
+    frRollingResistanceForce: 0
+    frSlipAngle: 0
+    frSlipRatio: 0
+    frLongitudinalFrictionCoefficient: 0
+    frTireNormalForce: 0
+    frTireLongitudinalForce: 0
+    frTireLateralForce: 0
+    frRollMoment: 0
+    frPitchMoment: 0
+    frYawMoment: 0
+    flEffectiveTireRadius: 0
+    flRollingResistanceForce: 0
+    flSlipAngle: 0
+    flSlipRatio: 0
+    flLongitudinalFrictionCoefficient: 0
+    flTireNormalForce: 0
+    flTireLongitudinalForce: 0
+    flTireLateralForce: 0
+    flRollMoment: 0
+    flPitchMoment: 0
+    flYawMoment: 0
+    rrEffectiveTireRadius: 0
+    rrRollingResistanceForce: 0
+    rrSlipAngle: 0
+    rrSlipRatio: 0
+    rrLongitudinalFrictionCoefficient: 0
+    rrTireNormalForce: 0
+    rrTireLongitudinalForce: 0
+    rrTireLateralForce: 0
+    rrRollMoment: 0
+    rrPitchMoment: 0
+    rrYawMoment: 0
+    rlEffectiveTireRadius: 0
+    rlRollingResistanceForce: 0
+    rlSlipAngle: 0
+    rlSlipRatio: 0
+    rlLongitudinalFrictionCoefficient: 0
+    rlTireNormalForce: 0
+    rlTireLongitudinalForce: 0
+    rlTireLateralForce: 0
+    rlRollMoment: 0
+    rlPitchMoment: 0
+    rlYawMoment: 0
+    peakLongitudinalFriction: 0
+    slipStiffness: 0
+    corneringStiffnessC_alpha: 0
+    peakLateralFriction: 0
+    pneumaticTrail_a_x: 0
+    lateralShift_a_y: 0
+    pivotPosition: {x: 0, y: 0, z: 0}
+    chassisEquilibrium: {x: 0, y: 0, z: 0}
+    frWheelEquilibrium: {x: 0, y: 0, z: 0}
+    flWheelEquilibrium: {x: 0, y: 0, z: 0}
+    rrWheelEquilibrium: {x: 0, y: 0, z: 0}
+    rlWheelEquilibrium: {x: 0, y: 0, z: 0}
+    chassisTransform: {fileID: 0}
+    wheelTransformFR: {fileID: 0}
+    wheelTransformFL: {fileID: 0}
+    wheelTransformRR: {fileID: 0}
+    wheelTransformRL: {fileID: 0}
+    suspSpringFRLine: {fileID: 0}
+    suspDamperFRLine: {fileID: 0}
+    tireSpringFRLine: {fileID: 0}
+    suspSpringFLLine: {fileID: 0}
+    suspDamperFLLine: {fileID: 0}
+    tireSpringFLLine: {fileID: 0}
+    suspSpringRRLine: {fileID: 0}
+    suspDamperRRLine: {fileID: 0}
+    tireSpringRRLine: {fileID: 0}
+    suspSpringRLLine: {fileID: 0}
+    suspDamperRLLine: {fileID: 0}
+    tireSpringRLLine: {fileID: 0}
+    antirollFrontCenterLine: {fileID: 0}
+    antirollRearCenterLine: {fileID: 0}
+  chassisPrefab: {fileID: 3289157651415042269, guid: 0e3cecfd9f5300041bd30fcf38f43b96, type: 3}
+  wheelPrefabFR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabFL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRR: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  wheelPrefabRL: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
   lineMaterial: {fileID: 0}
 --- !u!1 &134212651
 GameObject:
@@ -1471,6 +1673,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162496637}
   m_CullTransparentMesh: 1
+--- !u!1 &1167067815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167067817}
+  - component: {fileID: 1167067816}
+  m_Layer: 0
+  m_Name: Wheel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1167067816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167067815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2432ee202b34244db8ae98be6adcadb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tirePrefab: {fileID: 1838760435163132229, guid: 9be178e75e24e4849a02d065f051263d, type: 3}
+  formChain: 1
+  chainCount: 4
+  tireSpacing: 1.5
+  throttleKey: 119
+  brakeKey: 115
+  steerLeftKey: 97
+  steerRightKey: 100
+  maxSteerAngle: 0.8
+  steeringGain: 150
+  steeringDamping: 20
+  engineTorque: 100
+  useLinearModel: 0
+  totalVehicleMass: 1500
+  TimeScale: 1
+  globalGravity: 9.81
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  Tires: []
+  lineMaterial: {fileID: 0}
+--- !u!4 &1167067817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167067815}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1173988466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1792,7 +2059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e472005d44a4bcd4a983f9f23f7e6809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 16553454}
+  target: {fileID: 0}
   distance: 10
   height: 1
   positionDamping: 5
@@ -1924,7 +2191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55970d3929d4d043b77ec27ede69b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveCount: 120
+  waveCount: 0
   minAmplitude: 0.1
   baseAmplitude: 0.2
   maxAmplitude: 0.3
@@ -2021,7 +2288,7 @@ Transform:
   m_GameObject: {fileID: 1817095061}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.89, y: -0.5960357, z: -0.43}
+  m_LocalPosition: {x: -0.89, y: 0, z: -0.43}
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2141,3 +2408,4 @@ SceneRoots:
   - {fileID: 1747785025}
   - {fileID: 693617376}
   - {fileID: 1817095066}
+  - {fileID: 1167067817}
