@@ -130,29 +130,10 @@ public class FullCar : MonoBehaviour
         [HideInInspector] public LineRenderer antirollRearCenterLine;
     }
 
-    private struct QuadGraphPoints
-    {
-        public GameObject chassisPoint;
-        public GameObject wheelPointFR;
-        public GameObject wheelPointFL;
-        public GameObject wheelPointRR;
-        public GameObject wheelPointRL;
-    }
-
     [Header("--------------------------------------------------------------------------")]
 
-    [Header("Graph Settings:")]
-    public RectTransform graphContainer;
-    public float graphScale = 100f;
-    [Space]
-    public GameObject graphPointPrefabChassis;
-    public GameObject graphPointPrefabFRWheel;
-    public GameObject graphPointPrefabFLWheel;
-    public GameObject graphPointPrefabRRWheel;
-    public GameObject graphPointPrefabRLWheel;
-    [Space]
-    public int maxDataPoints = 200;
-    private Queue<QuadGraphPoints> activeGraphPoints = new Queue<QuadGraphPoints>();
+    [Header("Graph System: ")]
+    public VehicleResponseGraph graphSystem;
 
     [Header("--------------------------------------------------------------------------")]
 
@@ -230,11 +211,6 @@ public class FullCar : MonoBehaviour
     private void FixedUpdate()
     {
         float dt = Time.fixedDeltaTime * TimeScale;
-
-        float graphTimeX = 0f;
-        float graphChassisY = 0f;
-        float graphFR = 0f, graphFL = 0f, graphRR = 0f, graphRL = 0f;
-        bool hasGraphData = false;
 
         for (int i = 0; i < fullCars.Count; i++)
         {
@@ -377,22 +353,13 @@ public class FullCar : MonoBehaviour
             UpdateFullCarVisuals(car, roadY_FR, roadY_FL, roadY_RR, roadY_RL);
 
             //Capture Graph Data for First Car:
-            if (i == 0)
+            if (i == 0 && graphSystem != null)
             {
-                graphTimeX = Time.time;
-                graphChassisY = car.chassisPosition.y;
-                graphFR = car.frWheelPosition.y; graphFL = car.flWheelPosition.y;
-                graphRR = car.rrWheelPosition.y; graphRL = car.rlWheelPosition.y;
-                hasGraphData = true;
+                graphSystem.GraphFullCar(car.chassisPosition, car.frWheelPosition, car.flWheelPosition, car.rrWheelPosition, car.rlWheelPosition);
             }
 
-            //Store Updated Car Data:
-            fullCars[i] = car;
-        }
-
-        if (hasGraphData && graphContainer != null && graphPointPrefabChassis != null)
-        {
-            VisualizeQuadGraph(graphTimeX, graphChassisY, graphFR, graphFL, graphRR, graphRL);
+                //Store Updated Car Data:
+                fullCars[i] = car;
         }
     }
 
@@ -663,44 +630,6 @@ public class FullCar : MonoBehaviour
                 point += transform.right * wave * springCoilRadius;
             }
             line.SetPosition(j, point);
-        }
-    }
-
-    private void VisualizeQuadGraph(float timeX, float chassisY, float frY, float flY, float rrY, float rlY)
-    {
-        GameObject cPoint = Instantiate(graphPointPrefabChassis, graphContainer, false);
-        cPoint.GetComponent<RectTransform>().anchoredPosition = new Vector2(timeX * graphScale, chassisY * graphScale);
-
-        GameObject frPoint = Instantiate(graphPointPrefabFRWheel, graphContainer, false);
-        frPoint.GetComponent<RectTransform>().anchoredPosition = new Vector2(timeX * graphScale, frY * graphScale);
-
-        GameObject flPoint = Instantiate(graphPointPrefabFLWheel, graphContainer, false);
-        flPoint.GetComponent<RectTransform>().anchoredPosition = new Vector2(timeX * graphScale, flY * graphScale);
-
-        GameObject rrPoint = Instantiate(graphPointPrefabRRWheel, graphContainer, false);
-        rrPoint.GetComponent<RectTransform>().anchoredPosition = new Vector2(timeX * graphScale, rrY * graphScale);
-
-        GameObject rlPoint = Instantiate(graphPointPrefabRLWheel, graphContainer, false);
-        rlPoint.GetComponent<RectTransform>().anchoredPosition = new Vector2(timeX * graphScale, rlY * graphScale);
-
-        QuadGraphPoints frame = new QuadGraphPoints
-        {
-            chassisPoint = cPoint,
-            wheelPointFR = frPoint,
-            wheelPointFL = flPoint,
-            wheelPointRR = rrPoint,
-            wheelPointRL = rlPoint
-        };
-        activeGraphPoints.Enqueue(frame);
-
-        if (activeGraphPoints.Count > maxDataPoints)
-        {
-            QuadGraphPoints oldest = activeGraphPoints.Dequeue();
-            if (oldest.chassisPoint != null) Destroy(oldest.chassisPoint);
-            if (oldest.wheelPointFR != null) Destroy(oldest.wheelPointFR);
-            if (oldest.wheelPointFL != null) Destroy(oldest.wheelPointFL);
-            if (oldest.wheelPointRR != null) Destroy(oldest.wheelPointRR);
-            if (oldest.wheelPointRL != null) Destroy(oldest.wheelPointRL);
         }
     }
 }

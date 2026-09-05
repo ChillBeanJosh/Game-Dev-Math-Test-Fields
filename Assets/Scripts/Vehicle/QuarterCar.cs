@@ -40,23 +40,11 @@ public class QuarterCar : MonoBehaviour
         [HideInInspector] public LineRenderer suspensionDamperLine; 
         [HideInInspector] public LineRenderer tireSpringLine;       
     }
-    private struct DualGraphPoints
-    {
-        public GameObject chassisPoint;
-        public GameObject wheelPoint;
-    }
 
     [Header("--------------------------------------------------------------------------")]
 
-    [Header("Graph Settings: ")]
-    public RectTransform graphContainer;
-    public float graphScale = 100f;
-    [Space]
-    public GameObject graphPointPrefabM2;
-    public GameObject graphPointPrefabM1;
-    [Space]
-    public int maxDataPoints = 200;
-    private Queue<DualGraphPoints> activeGraphPoints = new Queue<DualGraphPoints>();
+    [Header("Graph System: ")]
+    public VehicleResponseGraph graphSystem;
 
     [Header("--------------------------------------------------------------------------")]
 
@@ -122,11 +110,6 @@ public class QuarterCar : MonoBehaviour
     {
         float deltaTime = Time.fixedDeltaTime * TimeScale;
 
-        float graphTimeX = 0f;
-        float graphChassisY = 0f;
-        float graphWheelY = 0f;
-        bool hasGraphData = false;
-
         for (int i = 0; i < quarterCars.Count; i++)
         {
             QuarterCarSystem currentCar = quarterCars[i];
@@ -187,21 +170,13 @@ public class QuarterCar : MonoBehaviour
             UpdateQuarterCarVisuals(currentCar, roadSurfaceY);
 
             //Capture Graph Data for First Car:
-            if (i == 0)
+            if (i == 0 && graphSystem != null)
             {
-                graphTimeX = Time.time;
-                graphChassisY = currentCar.chassisPosition.y;
-                graphWheelY = currentCar.wheelPosition.y;
-                hasGraphData = true;
+               graphSystem.GraphQuarterCar(currentCar.chassisPosition, currentCar.wheelPosition);
             }
 
             //Store Updated Car Data:
             quarterCars[i] = currentCar;
-        }
-
-        if (hasGraphData && graphContainer != null && graphPointPrefabM2 != null && graphPointPrefabM1 != null)
-        {
-            VisualizeDualGraph(graphTimeX, graphChassisY, graphWheelY);
         }
     }
 
@@ -363,30 +338,5 @@ public class QuarterCar : MonoBehaviour
         line.endColor = debugColor;
 
         line.useWorldSpace = true;
-    }
-
-    private void VisualizeDualGraph(float timeX, float chassisY, float wheelY)
-    {
-        //Instantiate, Transform, and Anchor Mass 2 Position Based on The Provided x and y Values Multiplied by The Graph Scale:
-        GameObject cPoint = Instantiate(graphPointPrefabM2, graphContainer, false);
-        RectTransform cRect = cPoint.GetComponent<RectTransform>();
-        cRect.anchoredPosition = new Vector2(timeX * graphScale, chassisY * graphScale);
-
-        //Instantiate, Transform, and Anchor Mass 1 Position Based on The Provided x and y Values Multiplied by The Graph Scale:
-        GameObject wPoint = Instantiate(graphPointPrefabM1, graphContainer, false);
-        RectTransform wRect = wPoint.GetComponent<RectTransform>();
-        wRect.anchoredPosition = new Vector2(timeX * graphScale, wheelY * graphScale);
-
-        //Store Both Points Together In A Small Structure and Enqueue It For Management:
-        DualGraphPoints combinedFrame = new DualGraphPoints { chassisPoint = cPoint, wheelPoint = wPoint };
-        activeGraphPoints.Enqueue(combinedFrame);
-
-        //If The Number Of Active Graph Points Exceeds The Maximum Allowed, Dequeue The Oldest Frame and Destroy Its GameObjects To Prevent Memory Bloat:
-        if (activeGraphPoints.Count > maxDataPoints)
-        {
-            DualGraphPoints oldestFrame = activeGraphPoints.Dequeue();
-            if (oldestFrame.chassisPoint != null) Destroy(oldestFrame.chassisPoint);
-            if (oldestFrame.wheelPoint != null) Destroy(oldestFrame.wheelPoint);
-        }
     }
 }

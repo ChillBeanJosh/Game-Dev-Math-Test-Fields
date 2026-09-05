@@ -81,25 +81,10 @@ public class AntirollHalfCar : MonoBehaviour
         [HideInInspector] public LineRenderer antirollLinkRightLine;
     }
 
-    private struct TriGraphPoints
-    {
-        public GameObject chassisPoint;
-        public GameObject wheelPointRight;
-        public GameObject wheelPointLeft;
-    }
-
     [Header("--------------------------------------------------------------------------")]
 
-    [Header("Graph Settings:")]
-    public RectTransform graphContainer;
-    public float graphScale = 100f;
-    [Space]
-    public GameObject graphPointPrefabChassis;
-    public GameObject graphPointPrefabRightWheel;
-    public GameObject graphPointPrefabLeftWheel;
-    [Space]
-    public int maxDataPoints = 200;
-    private Queue<TriGraphPoints> activeGraphPoints = new Queue<TriGraphPoints>();
+    [Header("Graph System: ")]
+    public VehicleResponseGraph graphSystem;
 
     [Header("--------------------------------------------------------------------------")]
 
@@ -180,12 +165,6 @@ public class AntirollHalfCar : MonoBehaviour
     private void FixedUpdate()
     {
         float dt = Time.fixedDeltaTime * TimeScale;
-
-        float graphTimeX = 0f;
-        float graphChassisY = 0f;
-        float graphWheelRightY = 0f;
-        float graphWheelLeftY = 0f;
-        bool hasGraphData = false;
 
         for (int i = 0; i < halfCars.Count; i++)
         {
@@ -283,22 +262,13 @@ public class AntirollHalfCar : MonoBehaviour
             UpdateHalfCarVisuals(car, roadY1, roadY2);
 
             //Capture Graph Data for First Car:
-            if (i == 0)
+            if (i == 0 && graphSystem != null)
             {
-                graphTimeX = Time.time;
-                graphChassisY = car.chassisPosition.y;
-                graphWheelRightY = car.rightWheelPosition.y;
-                graphWheelLeftY = car.leftWheelPosition.y;
-                hasGraphData = true;
+               graphSystem.GraphHalfCar(car.chassisPosition, car.rightWheelPosition, car.leftWheelPosition);
             }
 
             //Store Updated Car Data:
             halfCars[i] = car;
-        }
-
-        if (hasGraphData && graphContainer != null && graphPointPrefabChassis != null && graphPointPrefabRightWheel != null && graphPointPrefabLeftWheel != null)
-        {
-            VisualizeTriGraph(graphTimeX, graphChassisY, graphWheelRightY, graphWheelLeftY);
         }
     }
 
@@ -524,37 +494,6 @@ public class AntirollHalfCar : MonoBehaviour
                 point += transform.right * wave * springCoilRadius;
             }
             line.SetPosition(j, point);
-        }
-    }
-
-    private void VisualizeTriGraph(float timeX, float chassisY, float wheelRightY, float wheelLeftY)
-    {
-        //Instantiate, Transform, and Anchor Chassis Position Based on The Provided x and y Values Multiplied by The Graph Scale:
-        GameObject cPoint = Instantiate(graphPointPrefabChassis, graphContainer, false);
-        RectTransform cRect = cPoint.GetComponent<RectTransform>();
-        cRect.anchoredPosition = new Vector2(timeX * graphScale, chassisY * graphScale);
-
-        //Instantiate, Transform, and Anchor Right Wheel Position Based on The Provided x and y Values Multiplied by The Graph Scale:
-        GameObject wrPoint = Instantiate(graphPointPrefabRightWheel, graphContainer, false);
-        RectTransform wrRect = wrPoint.GetComponent<RectTransform>();
-        wrRect.anchoredPosition = new Vector2(timeX * graphScale, wheelRightY * graphScale);
-
-        //Instantiate, Transform, and Anchor Left Wheel Position Based on The Provided x and y Values Multiplied by The Graph Scale:
-        GameObject wlPoint = Instantiate(graphPointPrefabLeftWheel, graphContainer, false);
-        RectTransform wlRect = wlPoint.GetComponent<RectTransform>();
-        wlRect.anchoredPosition = new Vector2(timeX * graphScale, wheelLeftY * graphScale);
-
-        //Store Both Points Together In A Small Structure and Enqueue It For Management:
-        TriGraphPoints frame = new TriGraphPoints { chassisPoint = cPoint, wheelPointRight = wrPoint, wheelPointLeft = wlPoint };
-        activeGraphPoints.Enqueue(frame);
-
-        //If The Number Of Active Graph Points Exceeds The Maximum Allowed, Dequeue The Oldest Frame and Destroy Its GameObjects To Prevent Memory Bloat:
-        if (activeGraphPoints.Count > maxDataPoints)
-        {
-            TriGraphPoints oldest = activeGraphPoints.Dequeue();
-            if (oldest.chassisPoint != null) Destroy(oldest.chassisPoint);
-            if (oldest.wheelPointRight != null) Destroy(oldest.wheelPointRight);
-            if (oldest.wheelPointLeft != null) Destroy(oldest.wheelPointLeft);
         }
     }
 }

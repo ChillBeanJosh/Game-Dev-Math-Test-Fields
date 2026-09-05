@@ -294,8 +294,11 @@ public class OneWheel : MonoBehaviour
 
             Tires[i] = tire;
         }
-    }
 
+        // 2. Apply the RESULTANT force to the vehicle body
+        ApplyVehicleMotion(dt);
+
+    }
     private void ReadDriverInput()
     {
         throttleInput = 0f;
@@ -646,5 +649,33 @@ public class OneWheel : MonoBehaviour
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         // Add logic here to set positions for arrow wings if desired
+    }
+    private void ApplyVehicleMotion(float dt)
+    {
+        Vector3 totalForce = Vector3.zero;
+
+        foreach (var tire in Tires)
+        {
+            // 1. Get the current orientation of the tire
+            // This automatically includes the steerAngle because the transform
+            // is updated in UpdateVisualization()
+            Vector3 forward = tire.tireTransform.forward;
+            Vector3 right = tire.tireTransform.right;
+
+            // 2. Map the forces:
+            // Fx is longitudinal (Forward/Backward)
+            // Fy is lateral (Left/Right)
+            Vector3 forceInWorldSpace = (forward * tire.Fx) + (right * tire.Fy);
+
+            // 3. Accumulate
+            totalForce += forceInWorldSpace;
+        }
+
+        // 4. Move the vehicle
+        // F = ma -> a = F/m
+        Vector3 acceleration = totalForce / totalVehicleMass;
+
+        // Apply to the vehicle's position (or velocity if you have a rigidbody)
+        transform.position += acceleration * (dt * dt);
     }
 }
