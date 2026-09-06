@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class VehicleResponseGraph : Graphic
 {
     [Header("Graph Grid Settings")]
-    public float windowTimeX = 7f;
+    [SerializeField] private float windowTimeX = 7f;
     [Space]
-    public float maxDisplacementY = 0.16f;
-    public float minDisplacementY = -0.16f;
+    [SerializeField] private float maxDisplacementY = 0.16f;
+    [SerializeField] private float minDisplacementY = -0.16f;
     [Space]
     public float lineThickness = 2f;
 
@@ -32,6 +32,15 @@ public class VehicleResponseGraph : Graphic
     {
         base.Start();
         startTime = Time.time;
+    }
+
+    public void ApplyGraphSettings(float windowTimeX, float maxDisplacementY, float minDisplacementY)
+    {
+        this.windowTimeX = windowTimeX;
+        this.maxDisplacementY = maxDisplacementY;
+        this.minDisplacementY = minDisplacementY;
+
+        SetVerticesDirty();
     }
 
     public void GraphQuarterCar(Vector3 chassisPosition, Vector3 wheelPosition)

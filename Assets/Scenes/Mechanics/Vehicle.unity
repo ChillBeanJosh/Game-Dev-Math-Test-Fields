@@ -207,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 16553452}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 6, z: 0}
+  m_LocalPosition: {x: -2, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2294,8 +2294,8 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   windowTimeX: 5
-  maxDisplacementY: 2
-  minDisplacementY: -2
+  maxDisplacementY: 0
+  minDisplacementY: -6
   lineThickness: 2
   chassis_LineColor: {r: 1, g: 0, b: 0, a: 1}
   wheel1_LineColor: {r: 0, g: 0, b: 1, a: 1}
@@ -2364,8 +2364,8 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   windowTimeX: 5
-  maxDisplacementY: 2
-  minDisplacementY: -2
+  maxDisplacementY: 0
+  minDisplacementY: -6
   lineThickness: 2
   chassis_LineColor: {r: 1, g: 0, b: 0, a: 1}
   wheel1_LineColor: {r: 0, g: 0, b: 1, a: 1}
@@ -2540,7 +2540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55970d3929d4d043b77ec27ede69b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveCount: 250
+  waveCount: 10
   minAmplitude: 0.1
   baseAmplitude: 0.2
   maxAmplitude: 0.3
@@ -2774,8 +2774,8 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   windowTimeX: 5
-  maxDisplacementY: 2
-  minDisplacementY: -2
+  maxDisplacementY: 0
+  minDisplacementY: -6
   lineThickness: 2
   chassis_LineColor: {r: 1, g: 0, b: 0, a: 1}
   wheel1_LineColor: {r: 0, g: 0, b: 1, a: 1}
@@ -2802,6 +2802,7 @@ GameObject:
   - component: {fileID: 2116512781}
   - component: {fileID: 2116512780}
   - component: {fileID: 2116512779}
+  - component: {fileID: 2116512783}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2895,6 +2896,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2116512783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116512778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06c9020203bc3814c83fa6dcb49c8f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vehicleResponseGraphs:
+  - {fileID: 2074742881}
+  - {fileID: 2118990335}
+  - {fileID: 1479817748}
+  - {fileID: 1446952929}
+  _globalWindowTimeX: 5
+  _globalMaxDisplacementY: 0
+  _globalMinDisplacementY: -6
 --- !u!1 &2118990333
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,8 +2970,8 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   windowTimeX: 5
-  maxDisplacementY: 2
-  minDisplacementY: -2
+  maxDisplacementY: 0
+  minDisplacementY: -6
   lineThickness: 2
   chassis_LineColor: {r: 1, g: 0, b: 0, a: 1}
   wheel1_LineColor: {r: 0, g: 0, b: 1, a: 1}
