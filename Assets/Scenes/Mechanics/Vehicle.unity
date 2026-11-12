@@ -2540,7 +2540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55970d3929d4d043b77ec27ede69b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveCount: 10
+  waveCount: 100
   minAmplitude: 0.1
   baseAmplitude: 0.2
   maxAmplitude: 0.3

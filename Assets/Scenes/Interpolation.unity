@@ -407,42 +407,85 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodes:
-  - {x: -0.4, y: 0.87}
-  - {x: 3.23, y: 2.98}
-  - {x: 7.03, y: 1.39}
-  - {x: 10.6, y: 1.39}
+  - {x: 0, y: 0, z: 0}
+  - {x: 5, y: 5, z: 5}
+  - {x: 10, y: 0, z: 0}
+  - {x: 15, y: 5, z: -5}
+  - {x: 10, y: 5, z: -5}
   isCubicSpline: 1
-  isNaturalSpline: 0
-  leftFirstDerivative: -1
-  rightFirstDerivative: 1
+  isNaturalSpline: 1
+  leftFirstDerivativeX: 0
+  leftFirstDerivativeY: 0
+  leftFirstDerivativeZ: 0
+  rightFirstDerivativeX: 0
+  rightFirstDerivativeY: 0
+  rightFirstDerivativeZ: 0
   functions:
-  - a: -0.12118264
-    b: 0.73008466
-    c: -0.35776466
-    d: 0.6023249
-    xStart: -0.4
-    xEnd: 3.23
-  - a: 0.048734285
-    b: -0.91641057
-    c: 4.9604144
-    d: -5.12358
-    xStart: 3.23
-    xEnd: 7.03
-  - a: 0.023629764
-    b: -0.3869563
-    c: 1.2383522
-    d: 3.5984488
-    xStart: 7.03
-    xEnd: 10.6
+  - a_x: -0.17857297
+    b_x: 0
+    c_x: 5.1785707
+    d_x: 0
+    a_y: -3.482146
+    b_y: 0
+    c_y: 8.482136
+    d_y: 0
+    a_z: -2.589285
+    b_z: 0
+    c_z: 7.589285
+    d_z: 0
+    tStart: 0
+    tEnd: 1
+  - a_x: 0.8928636
+    b_x: -3.2143097
+    c_x: 8.39288
+    d_x: -1.0714319
+    a_y: 7.4107246
+    b_y: -32.67861
+    c_y: 41.160748
+    d_y: -10.8928585
+    a_z: 2.9464264
+    b_z: -16.607134
+    c_z: 24.196419
+    d_z: -5.5357122
+    tStart: 1
+    tEnd: 2
+  - a_x: -3.392864
+    b_x: 22.500055
+    c_x: -43.03585
+    d_x: 33.21438
+    a_y: -6.160726
+    b_y: 48.75009
+    c_y: -121.696655
+    d_y: 97.67873
+    a_z: 0.803574
+    b_z: -3.750019
+    c_z: -1.5178117
+    d_z: 11.60711
+    tStart: 2
+    tEnd: 3
+  - a_x: 2.6785734
+    b_x: -32.14288
+    c_x: 120.892944
+    d_x: -130.7144
+    a_y: 2.2321475
+    b_y: -26.785769
+    c_y: 104.91093
+    d_y: -128.92885
+    a_z: -1.1607145
+    b_z: 13.928575
+    c_z: -54.553585
+    d_z: 64.642876
+    tStart: 3
+    tEnd: 4
   drawGizmos: 1
-  resolution: 24
+  resolution: 55
   showTangents: 1
   showAccelerations: 1
-  vectorScale: 1
+  vectorScale: 0.1
   nodeColor: {r: 1, g: 0, b: 0.10779095, a: 1}
   splineColor: {r: 1, g: 1, b: 1, a: 1}
-  velocityColor: {r: 0.10737991, g: 1, b: 0, a: 1}
-  accelerationColor: {r: 0.0023498535, g: 0, b: 1, a: 1}
+  velocityColor: {r: 0, g: 1, b: 0.081326485, a: 1}
+  accelerationColor: {r: 0.03769684, g: 0, b: 1, a: 1}
 --- !u!4 &1611623654
 Transform:
   m_ObjectHideFlags: 0
